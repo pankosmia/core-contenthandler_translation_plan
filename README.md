@@ -1,3 +1,3 @@
-# contenthandler-template
+# core-contenthandler_translation_plan
 
-contenthandler-template
+core-contenthandler_translation_plan
