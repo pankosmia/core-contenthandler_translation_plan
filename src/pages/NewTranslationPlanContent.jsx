@@ -173,7 +173,7 @@ export default function NewTranslationPlan() {
         requireNet={false}
       />
       <PanDialog
-        titleLabel={"blabla"}
+        titleLabel={`${doI18n("pages:core-contenthandler_translation_plan:new_translation_plan", i18nRef.current)}`}
         isOpen={open}
         closeFn={() => handleClose()}
       >

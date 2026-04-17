@@ -43,22 +43,16 @@ export default function ContentDocument({
           <FormControlLabel
             value="greekSentences"
             control={<Radio />}
-            label={doI18n(
-              "pages:core-contenthandler_text_translation:book_content_radio",
-              i18nRef.current,
-            )}
+            label={"Greek sentences"}
           />
           <FormControlLabel
             value="bcvSentences"
             control={<Radio />}
-            label={doI18n(
-              "pages:core-contenthandler_text_translation:plan_content_radio",
-              i18nRef.current,
-            )}
+            label={"Book Chapters Verses"}
           />
         </RadioGroup>
       </FormControl>
-      {contentOption === "greekSentences" && (
+      {/* {contentOption === "greekSentences" && (
         <>
           <Typography sx={{ padding: 1 }}>
             {doI18n(
@@ -77,7 +71,7 @@ export default function ContentDocument({
             )}
           </Typography>
         </>
-      )}
+      )} */}
     </>
   );
 }
