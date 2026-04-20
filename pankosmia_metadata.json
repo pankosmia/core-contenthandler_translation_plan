@@ -6,7 +6,7 @@
     "minServerVersion": "0.12.14"
   },
   "endpoints": {
-    "textTranslation": {
+    "translationPlan": {
       "create_document": [
         {
           "doc": "Create document for textTranslation Project",

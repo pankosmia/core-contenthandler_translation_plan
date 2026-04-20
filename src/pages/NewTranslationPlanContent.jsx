@@ -15,10 +15,10 @@ import LanguagePicker from "./TranslationPlanContent/LanguagePicker";
 import NameDocument from "./TranslationPlanContent/NameDocument";
 
 export default function NewTranslationPlan() {
+  const { i18nRef } = useContext(i18nContext);
   const [open, setOpen] = useState(true);
   const [errorDialogOpen, setErrorDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { i18nRef } = useContext(i18nContext);
   const hash = window.location.hash;
   const query = hash.includes("?") ? hash.split("?") : "";
   const typePageQuery = new URLSearchParams(query[1]);
@@ -31,7 +31,7 @@ export default function NewTranslationPlan() {
   const [postCount, setPostCount] = useState();
   const [showVersification, setShowVersification] = useState(true);
   const [versification, setVersification] = useState("eng");
-  const [localRepos, setLocalRepos] = useState([]);
+  let localRepos;
   const [repoExists, setRepoExists] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState({
     language_code: "",
@@ -86,6 +86,7 @@ export default function NewTranslationPlan() {
       return;
     }
   };
+
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
