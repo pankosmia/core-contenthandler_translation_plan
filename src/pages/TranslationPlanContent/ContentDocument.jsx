@@ -9,6 +9,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Box,
 } from "@mui/material";
 import { doI18n, getAndSetJson } from "pithekos-lib";
 import { i18nContext, PanVersificationPicker } from "pankosmia-rcl";
@@ -40,11 +41,13 @@ export default function ContentDocument({
   }, [open]);
   return (
     <>
-      <PanVersificationPicker
-        versification={versification}
-        setVersification={setVersification}
-        isOpen={open}
-      />
+      <Box sx={{ paddingBottom: "16px" }}>
+        <PanVersificationPicker
+          versification={versification}
+          setVersification={setVersification}
+          isOpen={open}
+        />
+      </Box>
       <FormControl>
         <FormLabel id="book-create-options">
           {doI18n(

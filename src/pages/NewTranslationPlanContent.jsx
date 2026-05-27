@@ -8,8 +8,8 @@ import {
 } from "pankosmia-rcl";
 import ErrorDialog from "./TranslationPlanContent/ErrorDialog";
 import { Box, DialogContent } from "@mui/material";
-import { doI18n, postJson } from "pithekos-lib";
-import { useContext, useState } from "react";
+import { doI18n, getAndSetJson, getJson, postJson } from "pithekos-lib";
+import { useContext, useEffect, useState } from "react";
 import ContentDocument from "./TranslationPlanContent/ContentDocument";
 import LanguagePicker from "./TranslationPlanContent/LanguagePicker";
 import NameDocument from "./TranslationPlanContent/NameDocument";
@@ -31,7 +31,7 @@ export default function NewTranslationPlan() {
   const [postCount, setPostCount] = useState();
   const [showVersification, setShowVersification] = useState(true);
   const [versification, setVersification] = useState("eng");
-  let localRepos;
+  const [localRepos, setLocalRepos] = useState([]);
   const [repoExists, setRepoExists] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState({
     language_code: "",
@@ -39,13 +39,13 @@ export default function NewTranslationPlan() {
   });
   const [languageIsValid, setLanguageIsValid] = useState(true);
   const [errorAbbreviation, setErrorAbbreviation] = useState(false);
-
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  console.log("selectedPlan", selectedPlan);
   const steps = [
-    `${doI18n("pages:core-contenthandler_text_translation:name_section", i18nRef.current)}`,
-    `${doI18n("pages:core-contenthandler_text_translation:language", i18nRef.current)}`,
     `${doI18n("pages:core-contenthandler_text_translation:content_section", i18nRef.current)}`,
+    `${doI18n("pages:core-contenthandler_text_translation:language", i18nRef.current)}`,
+    `${doI18n("pages:core-contenthandler_text_translation:name_section", i18nRef.current)}`,
   ];
-
   const handleClose = () => {
     setOpen(false);
     if (returnType === "dashboard") {
@@ -58,22 +58,48 @@ export default function NewTranslationPlan() {
       });
     }
   };
+  useEffect(() => {
+    if (open) {
+      getAndSetJson({
+        url: "/git/list-local-repos",
+        setter: setLocalRepos,
+      }).then();
+    }
+  }, [open]);
   const handleCreate = async () => {
     // Make repo (empty for plans)
+    let planJson = null;
+    let submittedVersification = versification;
+    if (contentOption === "plan" && selectedPlan) {
+      const planResponse = await getJson(
+        `/burrito/ingredient/raw/${selectedPlan}?ipath=plan.json`,
+        debugRef.current,
+      );
+      if (planResponse.ok) {
+        planJson = planResponse.json;
+        submittedVersification = planJson.versification;
+      } else {
+        setErrorMessage(
+          `${doI18n("pages:core-contenthandler_text_translation:content_creation_error", i18nRef.current)}: ${planResponse.status}`,
+        );
+        setErrorDialogOpen(true);
+        return;
+      }
+    }
     const payload = {
       content_name: contentName,
       content_abbr: contentAbbr,
-      content_type: contentType,
       content_language_code: currentLanguage.language_code,
       content_language_name: currentLanguage.language_name,
-      versification: versification,
+      versification: submittedVersification,
+      plan: planJson,
     };
-
     const response = await postJson(
-      "/git/new-translation-plan",
+      "/git/new-translation-plan-resource",
       JSON.stringify(payload),
       debugRef.current,
     );
+    console.log("payload", payload);
     if (response.ok) {
       setPostCount(postCount + 1);
     } else {
@@ -85,11 +111,34 @@ export default function NewTranslationPlan() {
       setErrorDialogOpen(true);
       return;
     }
+    await handleClose();
   };
 
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
+        return (
+          <ContentDocument
+            open={open}
+            contentOption={contentOption}
+            setContentOption={setContentOption}
+            versification={versification}
+            setVersification={setVersification}
+            showVersification={showVersification}
+            setShowVersification={setShowVersification}
+            selectedPlan={selectedPlan}
+            setSelectedPlan={setSelectedPlan}
+          />
+        );
+      case 1:
+        return (
+          <LanguagePicker
+            currentLanguage={currentLanguage}
+            setCurrentLanguage={setCurrentLanguage}
+            setIsValid={setLanguageIsValid}
+          />
+        );
+      case 2:
         return (
           <NameDocument
             contentType={contentType}
@@ -105,26 +154,6 @@ export default function NewTranslationPlan() {
             localRepos={localRepos}
           />
         );
-      case 1:
-        return (
-          <LanguagePicker
-            currentLanguage={currentLanguage}
-            setCurrentLanguage={setCurrentLanguage}
-            setIsValid={setLanguageIsValid}
-          />
-        );
-      case 2:
-        return (
-          <ContentDocument
-            open={open}
-            contentOption={contentOption}
-            setContentOption={setContentOption}
-            versification={versification}
-            setVersification={setVersification}
-            showVersification={showVersification}
-            setShowVersification={setShowVersification}
-          />
-        );
       default:
         return null;
     }
@@ -132,13 +161,10 @@ export default function NewTranslationPlan() {
   const isStepValid = (step) => {
     switch (step) {
       case 0:
-        return (
-          contentName.trim().length > 0 &&
-          contentAbbr.trim().length > 0 &&
-          contentType.trim().length > 0 &&
-          errorAbbreviation === false &&
-          repoExists === false
-        );
+        if (contentOption === "plan") {
+          return versification.trim().length === 3 && Boolean(selectedPlan);
+        }
+        return true;
 
       case 1:
         return (
@@ -147,7 +173,13 @@ export default function NewTranslationPlan() {
           languageIsValid === true
         );
       case 2:
-        return true;
+        return (
+          contentName.trim().length > 0 &&
+          contentAbbr.trim().length > 0 &&
+          contentType.trim().length > 0 &&
+          errorAbbreviation === false &&
+          repoExists === false
+        );
       default:
         return true;
     }
@@ -169,7 +201,11 @@ export default function NewTranslationPlan() {
         }}
       />
       <Header
-        titleKey="pages:core-contenthandler_text_translation:title"
+        titleKey={
+          returnType === "dashboard"
+            ? "pages:core-dashboard:title"
+            : "pages:content:title"
+        }
         currentId="core-contenthandler_text_translation"
         requireNet={false}
       />
@@ -185,6 +221,7 @@ export default function NewTranslationPlan() {
             isStepValid={isStepValid}
             handleCreate={handleCreate}
             handleClose={handleClose}
+            requiredFieldsLabel
           />
         </DialogContent>
         <PanDialogActions />

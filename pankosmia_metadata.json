@@ -1,86 +1,20 @@
 {
   "id": "core-contenthandler_translation_plan",
+  "exclude_from_menu": true,
+  "exclude_from_dashboard": true,
+  "minServerVersion": "0.12.14",
   "require": {
     "net": false,
-    "debug": true,
-    "minServerVersion": "0.12.14"
+    "debug": true
   },
   "endpoints": {
-    "translationPlan": {
+    "x-translationplan": {
       "create_document": [
         {
           "doc": "Create document for textTranslation Project",
           "placeHolders": {},
           "label": "pages:core-contenthandler_translation_plan:new_translation_plan",
           "url": "/createDocument/translationPlan"
-        }
-      ],
-      "new_book": [
-        {
-          "doc": "Add a book to a textTranslation document",
-          "placeHolders": {
-            "REPO_PATH": {
-              "doc": "The path to the repo in <X>/<Y>/<Z> format"
-            }
-          },
-          "label": "pages:content:new_book",
-          "url": "/newBook?repoPath=%%REPO_PATH%%"
-        }
-      ],
-      "delete_book": [
-        {
-          "doc": "Delete a book to a textTranslation document",
-          "placeHolders": {
-            "REPO_PATH": {
-              "doc": "The path to the repo in <X>/<Y>/<Z> format"
-            }
-          },
-          "label": "pages:core-contenthandler_text_translation:delete_book",
-          "url": "/deleteBook?repoPath=%%REPO_PATH%%"
-        }
-      ],
-      "import_book": [
-        {
-          "doc": "Import a book into a textTranslation document",
-          "placeHolders": {
-            "REPO_PATH": {
-              "doc": "The path to the repo in <X>/<Y>/<Z> format"
-            }
-          },
-          "label": "pages:content:import_book",
-          "url": "/importBook?repoPath=%%REPO_PATH%%"
-        }
-      ],
-      "export": [
-        {
-          "subMenu": [
-            {
-              "usfm": [
-                {
-                  "doc": "Export to usfm a textTranslation document",
-                  "placeHolders": {
-                    "REPO_PATH": {
-                      "doc": "The path to the repo in <X>/<Y>/<Z> format"
-                    }
-                  },
-                  "label": "pages:content:export_usfm",
-                  "url": "/export/usfm?repoPath=%%REPO_PATH%%"
-                }
-              ],
-              "pdf": [
-                {
-                  "doc": "Export to pdf a textTranslation document",
-                  "placeHolders": {
-                    "REPO_PATH": {
-                      "doc": "The path to the repo in <X>/<Y>/<Z> format"
-                    }
-                  },
-                  "label": "pages:content:export_pdf",
-                  "url": "/export/pdf?repoPath=%%REPO_PATH%%"
-                }
-              ]
-            }
-          ]
         }
       ]
     }
