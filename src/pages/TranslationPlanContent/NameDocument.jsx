@@ -1,15 +1,19 @@
 import {
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
   Grid2,
+  Radio,
+  RadioGroup,
   TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { doI18n } from "pithekos-lib";
 import { i18nContext } from "pankosmia-rcl";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import SectionDialog from "../SectionDialog";
 
 export default function NameDocument({
   contentType,
@@ -25,140 +29,125 @@ export default function NameDocument({
   localRepos,
   copyright,
   setCopyright,
-  publicDomain,
-  setPublicDomain,
+  optionCopyright,
+  setOptionCopyright,
 }) {
   const regexAbbreviation = /^[A-Za-z0-9][A-Za-z0-9_]{0,6}[A-Za-z0-9]$/;
   const { i18nRef } = useContext(i18nContext);
+  const handleChange = (event) => {
+    setOptionCopyright(event.target.value);
+  };
+
   return (
-    <>
-      <Grid2 container spacing={1} justifyItems="flex-end" alignItems="stretch">
-        <Grid2 container size={12} spacing={1}>
-          <Typography> Name</Typography>
-          <Grid2 item size={12}>
+    <Grid2 container spacing={2}>
+      <Grid2 size={12}>
+        <SectionDialog titleSection="Name">
+          <TextField
+            id="name"
+            sx={{ width: "100%" }}
+            required
+            label={doI18n(
+              "pages:core-contenthandler_text_translation:name",
+              i18nRef.current,
+            )}
+            value={contentName}
+            onChange={(e) => setContentName(e.target.value)}
+          />
+          <Tooltip
+            open={repoExists}
+            title={doI18n(
+              "pages:core-contenthandler_text_translation:name_is_taken",
+              i18nRef.current,
+            )}
+            placement="top-start"
+          >
             <TextField
-              id="name"
               sx={{ width: "100%" }}
+              id="abbr"
+              error={errorAbbreviation}
+              helperText={doI18n(
+                "pages:core-contenthandler_text_translation:helper_abbreviation",
+                i18nRef.current,
+              )}
               required
               label={doI18n(
-                "pages:core-contenthandler_text_translation:name",
+                "pages:core-contenthandler_text_translation:abbreviation",
                 i18nRef.current,
               )}
-              value={contentName}
-              onChange={(event) => {
-                setContentName(event.target.value);
+              value={contentAbbr}
+              onChange={(e) => {
+                const value = e.target.value;
+                setRepoExists(
+                  localRepos.map((l) => l.split("/")[2]).includes(value),
+                );
+                setContentAbbr(value);
+                setErrorAbbreviation(!regexAbbreviation.test(value));
               }}
             />
-          </Grid2>
-          <Grid2 item size={12}>
-            <Tooltip
-              open={repoExists}
-              slotProps={{
-                popper: {
-                  modifiers: [{ name: "offset", options: { offset: [0, -7] } }],
-                },
-              }}
-              title={doI18n(
-                "pages:core-contenthandler_text_translation:name_is_taken",
-                i18nRef.current,
-              )}
-              placement="top-start"
+          </Tooltip>
+        </SectionDialog>
+      </Grid2>
+
+      <Grid2 size={12}>
+        <SectionDialog titleSection="Copyright">
+          <FormControl>
+            <RadioGroup
+              value={optionCopyright}
+              onChange={handleChange}
+              row
+              name="row-radio-buttons-group"
             >
-              <TextField
-                sx={{ width: "100%" }}
-                id="abbr"
-                error={errorAbbreviation}
-                helperText={`${doI18n("pages:core-contenthandler_text_translation:helper_abbreviation", i18nRef.current)}`}
-                required
-                label={doI18n(
-                  "pages:core-contenthandler_text_translation:abbreviation",
-                  i18nRef.current,
-                )}
-                value={contentAbbr}
-                onChange={(event) => {
-                  const value = event.target.value;
-                  setRepoExists(
-                    localRepos.map((l) => l.split("/")[2]).includes(value),
-                  );
-                  setContentAbbr(value);
-                  setErrorAbbreviation(!regexAbbreviation.test(value));
-                }}
-              />
-            </Tooltip>
-          </Grid2>
-        </Grid2>
-        <Grid2 container size={12}>
-          <Grid2 size={12} spacing={1}>
-            <Typography> Copyright</Typography>
-          </Grid2>
-          <Grid2 size={12}>
-            <FormGroup>
               <FormControlLabel
-                control={
-                  <Checkbox
-                    size="small"
-                    color="secondary"
-                    checked={publicDomain}
-                    onChange={() => setPublicDomain(!publicDomain)}
-                  />
-                }
+                value="all_rights_reserved"
+                control={<Radio />}
+                label="All rights reserved"
+              />
+              <FormControlLabel
+                value="public-domain"
+                control={<Radio />}
                 label={doI18n(
                   "pages:core-contenthandler_translation_plan:public_domain",
                   i18nRef.current,
                 )}
               />
-            </FormGroup>
-          </Grid2>
-          <Grid2 item size={6}>
-            <TextField
-              disabled={publicDomain}
-              id="author_name"
-              sx={{ width: "100%" }}
-              required
-              label={doI18n(
-                "pages:core-contenthandler_translation_plan:author_name",
-                i18nRef.current,
-              )}
-              value={copyright.author_name}
-              onChange={(event) => {
-                const value = event.target.value;
-                setCopyright({ ...copyright, author_name: value });
-              }}
-            />
-          </Grid2>
-          <Grid2 item size={6}>
-            <TextField
-              disabled={publicDomain}
-              sx={{ width: "100%" }}
-              id="year"
-              required
-              label={doI18n(
-                "pages:core-contenthandler_translation_plan:year",
-                i18nRef.current,
-              )}
-              value={copyright.year}
-              onChange={(event) => {
-                const value = event.target.value.replace(/\D/g, "").slice(0, 4);
-                setCopyright({
-                  ...copyright,
-                  year: value,
-                });
-              }}
-            />
-          </Grid2>
-        </Grid2>
+            </RadioGroup>
+          </FormControl>
+          {optionCopyright === "all_rights_reserved" && (
+            <>
+              <TextField
+                id="author_name"
+                sx={{ width: "100%" }}
+                required
+                label={doI18n(
+                  "pages:core-contenthandler_translation_plan:author_name",
+                  i18nRef.current,
+                )}
+                value={copyright.author_name}
+                onChange={(e) =>
+                  setCopyright({ ...copyright, author_name: e.target.value })
+                }
+              />
 
-        <TextField
-          id="type"
-          required
-          disabled={true}
-          sx={{ display: "none" }}
-          value={contentType}
-          onChange={(event) => {
-            setContentType(event.target.value);
-          }}
-        />
+              <TextField
+                sx={{ width: "100%" }}
+                id="year"
+                required
+                label={doI18n(
+                  "pages:core-contenthandler_translation_plan:year",
+                  i18nRef.current,
+                )}
+                value={copyright.year}
+                onChange={(e) =>
+                  setCopyright({
+                    ...copyright,
+                    year: e.target.value.replace(/\D/g, "").slice(0, 4),
+                  })
+                }
+              />
+            </>
+          )}
+        </SectionDialog>
       </Grid2>
-    </>
+    </Grid2>
   );
 }

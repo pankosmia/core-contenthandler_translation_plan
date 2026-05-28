@@ -1,6 +1,5 @@
 import {
   PanDialog,
-  PanDialogActions,
   i18nContext,
   debugContext,
   Header,
@@ -44,13 +43,14 @@ export default function NewTranslationPlan() {
     author_name: "",
     year: "",
   });
-  const [publicDomain, setPublicDomain] = useState(false);
-  const fullCopyright = !publicDomain
-    ? `${copyright.author_name} ${copyright.year}`
-    : `${doI18n(
-        "pages:core-core-contenthandler_translation_plan:public_domain",
-        i18nRef.current,
-      )}`;
+  const [optionCopyright, setOptionCopyright] = useState("all_rights_reserved");
+  const fullCopyright =
+    optionCopyright !== "public-domain"
+      ? `${copyright.author_name} ${copyright.year}`
+      : `${doI18n(
+          "pages:core-contenthandler_translation_plan:public_domain",
+          i18nRef.current,
+        )}`;
 
   const steps = [
     `${doI18n("pages:core-contenthandler_text_translation:content_section", i18nRef.current)}`,
@@ -123,7 +123,7 @@ export default function NewTranslationPlan() {
       setErrorDialogOpen(true);
       return;
     }
-    //await handleClose();
+    await handleClose();
   };
 
   const renderStepContent = (step) => {
@@ -166,8 +166,8 @@ export default function NewTranslationPlan() {
             localRepos={localRepos}
             copyright={copyright}
             setCopyright={setCopyright}
-            publicDomain={publicDomain}
-            setPublicDomain={setPublicDomain}
+            optionCopyright={optionCopyright}
+            setOptionCopyright={setOptionCopyright}
           />
         );
       default:

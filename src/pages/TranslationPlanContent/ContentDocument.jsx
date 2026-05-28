@@ -63,6 +63,7 @@ export default function ContentDocument({
           defaultValue="bcv"
           onChange={(event) => setContentOption(event.target.value)}
         >
+          <FormControlLabel value="bcv" control={<Radio />} label={"Empty"} />
           <FormControlLabel
             value="plan"
             disabled={planResources.length === 0}
@@ -71,12 +72,6 @@ export default function ContentDocument({
               "pages:core-contenthandler_text_translation:plan_content_radio",
               i18nRef.current,
             )}
-          />
-
-          <FormControlLabel
-            value="bcv"
-            control={<Radio />}
-            label={"Book Chapters Verses"}
           />
         </RadioGroup>
       </FormControl>
@@ -127,16 +122,6 @@ export default function ContentDocument({
                 ))}
             </Select>
           </FormControl>
-        </>
-      )}
-      {contentOption === "bcv" && (
-        <>
-          <Typography sx={{ padding: 1 }}>
-            {doI18n(
-              "pages:core-contenthandler_text_translation:helper_template",
-              i18nRef.current,
-            )}
-          </Typography>
         </>
       )}
     </>
