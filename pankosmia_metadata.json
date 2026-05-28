@@ -31,6 +31,22 @@
     },
     "new_translation_plan": {
       "en": "Translation Plan"
+    },
+    "properties": {
+      "en": "Properties",
+      "fr": "Propriétés"
+    },
+    "public_domain": {
+      "en": "Public Domain",
+      "fr": "Domaine Public"
+    },
+    "author_name": {
+      "en": "Name",
+      "fr": "Nom"
+    },
+    "year": {
+      "en": "Year",
+      "fr": "Année"
     }
   }
 }

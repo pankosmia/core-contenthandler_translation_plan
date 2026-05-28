@@ -27,7 +27,7 @@ export default function NewTranslationPlan() {
   const [contentName, setContentName] = useState("");
   const [contentAbbr, setContentAbbr] = useState("");
   const [contentType, setContentType] = useState("text_translation");
-  const [contentOption, setContentOption] = useState("greekSentences");
+  const [contentOption, setContentOption] = useState("bcv");
   const [postCount, setPostCount] = useState();
   const [showVersification, setShowVersification] = useState(true);
   const [versification, setVersification] = useState("eng");
@@ -40,11 +40,22 @@ export default function NewTranslationPlan() {
   const [languageIsValid, setLanguageIsValid] = useState(true);
   const [errorAbbreviation, setErrorAbbreviation] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  console.log("selectedPlan", selectedPlan);
+  const [copyright, setCopyright] = useState({
+    author_name: "",
+    year: "",
+  });
+  const [publicDomain, setPublicDomain] = useState(false);
+  const fullCopyright = !publicDomain
+    ? `${copyright.author_name} ${copyright.year}`
+    : `${doI18n(
+        "pages:core-core-contenthandler_translation_plan:public_domain",
+        i18nRef.current,
+      )}`;
+
   const steps = [
     `${doI18n("pages:core-contenthandler_text_translation:content_section", i18nRef.current)}`,
     `${doI18n("pages:core-contenthandler_text_translation:language", i18nRef.current)}`,
-    `${doI18n("pages:core-contenthandler_text_translation:name_section", i18nRef.current)}`,
+    `${doI18n("pages:core-contenthandler_translation_plan:properties", i18nRef.current)}`,
   ];
   const handleClose = () => {
     setOpen(false);
@@ -92,7 +103,8 @@ export default function NewTranslationPlan() {
       content_language_code: currentLanguage.language_code,
       content_language_name: currentLanguage.language_name,
       versification: submittedVersification,
-      plan: planJson,
+      plan: planJson && JSON.stringify(planJson),
+      copyright: fullCopyright,
     };
     const response = await postJson(
       "/git/new-translation-plan-resource",
@@ -111,7 +123,7 @@ export default function NewTranslationPlan() {
       setErrorDialogOpen(true);
       return;
     }
-    await handleClose();
+    //await handleClose();
   };
 
   const renderStepContent = (step) => {
@@ -152,6 +164,10 @@ export default function NewTranslationPlan() {
             errorAbbreviation={errorAbbreviation}
             setErrorAbbreviation={setErrorAbbreviation}
             localRepos={localRepos}
+            copyright={copyright}
+            setCopyright={setCopyright}
+            publicDomain={publicDomain}
+            setPublicDomain={setPublicDomain}
           />
         );
       default:
@@ -224,7 +240,6 @@ export default function NewTranslationPlan() {
             requiredFieldsLabel
           />
         </DialogContent>
-        <PanDialogActions />
       </PanDialog>
       {/* Error Dialog */}
       <ErrorDialog

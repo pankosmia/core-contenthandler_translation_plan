@@ -60,6 +60,7 @@ export default function ContentDocument({
           aria-labelledby="book-create-options"
           name="book-create-options-radio-group"
           value={contentOption}
+          defaultValue="bcv"
           onChange={(event) => setContentOption(event.target.value)}
         >
           <FormControlLabel
