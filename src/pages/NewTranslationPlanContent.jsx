@@ -72,7 +72,7 @@ export default function NewTranslationPlan() {
   useEffect(() => {
     if (open) {
       getAndSetJson({
-        url: "/git/list-local-repos",
+        url: "/api/git/list-local-repos",
         setter: setLocalRepos,
       }).then();
     }
@@ -83,7 +83,7 @@ export default function NewTranslationPlan() {
     let submittedVersification = versification;
     if (contentOption === "plan" && selectedPlan) {
       const planResponse = await getJson(
-        `/burrito/ingredient/raw/${selectedPlan}?ipath=plan.json`,
+        `/api/burrito/ingredient/raw/${selectedPlan}?ipath=plan.json`,
         debugRef.current,
       );
       if (planResponse.ok) {
@@ -107,11 +107,10 @@ export default function NewTranslationPlan() {
       copyright: fullCopyright,
     };
     const response = await postJson(
-      "/git/new-translation-plan-resource",
+      "/api/git/new-translation-plan-resource",
       JSON.stringify(payload),
       debugRef.current,
     );
-    console.log("payload", payload);
     if (response.ok) {
       setPostCount(postCount + 1);
     } else {
@@ -211,7 +210,7 @@ export default function NewTranslationPlan() {
           backgroundPosition: "center",
           zIndex: -1,
           backgroundImage:
-            'url("/app-resources/pages/content/background_blur.png")',
+            'url("/api/app-resources/pages/content/background_blur.png")',
           backgroundRepeat: "no-repeat",
           backdropFilter: "blur(3px)",
         }}

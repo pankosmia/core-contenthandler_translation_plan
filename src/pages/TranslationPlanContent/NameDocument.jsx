@@ -1,18 +1,15 @@
 import {
-  Checkbox,
   FormControl,
   FormControlLabel,
-  FormGroup,
   Grid2,
   Radio,
   RadioGroup,
   TextField,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import { doI18n } from "pithekos-lib";
 import { i18nContext } from "pankosmia-rcl";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import SectionDialog from "../SectionDialog";
 
 export default function NameDocument({
