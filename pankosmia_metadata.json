@@ -2,9 +2,22 @@
   "id": "core-contenthandler_translation_plan",
   "exclude_from_menu": true,
   "exclude_from_dashboard": true,
+  "minServerVersion": "0.16.1",
   "require": {
     "net": false,
     "debug": true
+  },
+  "endpoints": {
+    "x-translationplan": {
+      "create_document": [
+        {
+          "doc": "Create document for textTranslation Project",
+          "placeHolders": {},
+          "label": "pages:core-contenthandler_translation_plan:new_translation_plan",
+          "url": "/createDocument/translationPlan"
+        }
+      ]
+    }
   },
   "i18n": {
     "title": {
@@ -15,6 +28,25 @@
     },
     "stub_content": {
       "en": "Content goes here"
+    },
+    "new_translation_plan": {
+      "en": "Translation Plan"
+    },
+    "properties": {
+      "en": "Properties",
+      "fr": "Propriétés"
+    },
+    "public_domain": {
+      "en": "Public Domain",
+      "fr": "Domaine Public"
+    },
+    "author_name": {
+      "en": "Author or organisation name",
+      "fr": "Nom"
+    },
+    "year": {
+      "en": "Year",
+      "fr": "Année"
     }
   }
 }

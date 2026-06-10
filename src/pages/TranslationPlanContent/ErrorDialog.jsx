@@ -34,7 +34,7 @@ export default function ErrorDialog({
           color="primary"
         >
           {doI18n(
-            "pages:core-contenthandler_translation_plan:close",
+            "pages:core-contenthandler_text_translation:close",
             i18nRef.current,
           )}
         </Button>
