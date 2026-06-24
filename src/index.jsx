@@ -7,7 +7,7 @@ import NewTranslationPlan from "./pages/NewTranslationPlanContent";
 import { ThemeProvider } from "@emotion/react";
 import { SnackbarProvider, MaterialDesignContent } from "notistack";
 import { useEffect, useState } from "react";
-import { getAndSetJson } from "pithekos-lib";
+import { getAndSetJson } from "pankosmia-lib/http";
 import { createTheme, styled } from "@mui/material";
 
 const router = createHashRouter([

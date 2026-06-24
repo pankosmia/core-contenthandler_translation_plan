@@ -11,7 +11,8 @@ import {
   MenuItem,
   Box,
 } from "@mui/material";
-import { doI18n, getAndSetJson } from "pithekos-lib";
+import { getAndSetJson } from "pankosmia-lib/http";
+import { doI18n } from "pankosmia-lib/i18n";
 import { i18nContext, PanVersificationPicker } from "pankosmia-rcl";
 import sx from "../../pages/Selection.styles";
 import ListMenuItem from "../../pages/ListMenuItem";
