@@ -7,7 +7,8 @@ import {
 } from "pankosmia-rcl";
 import ErrorDialog from "./TranslationPlanContent/ErrorDialog";
 import { Box, DialogContent } from "@mui/material";
-import { doI18n, getAndSetJson, getJson, postJson } from "pithekos-lib";
+import { getAndSetJson, getJson, postJson } from "pankosmia-lib/http";
+import { doI18n } from "pankosmia-lib/i18n";
 import { useContext, useEffect, useState } from "react";
 import ContentDocument from "./TranslationPlanContent/ContentDocument";
 import LanguagePicker from "./TranslationPlanContent/LanguagePicker";
