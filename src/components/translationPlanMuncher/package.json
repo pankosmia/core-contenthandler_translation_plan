@@ -1,10 +1,10 @@
 {
-  "name": "core-contenthandler_translation_plan",
+  "name": "pankosmia-tranlationPlan-muncher",
   "version": "0.2.0",
   "private": false,
-  "homepage": "/clients/core-contenthandler_translation_plan",
-  "main": "munchers/translationPlan-muncher-rcl.umd.js",
-  "module": "munchers/translationPlan-muncher-rcl.es.js",
+  "homepage": "/clients/pankosmia-tranlationPlan-muncher",
+  "main": "munchers/tranlationPlan-muncher-rcl.umd.js",
+  "module": "munchers/tranlationPlan-muncher-rcl.es.js",
   "files": [
     "munchers"
   ],
@@ -13,12 +13,9 @@
     "@emotion/styled": "^11.13.0",
     "@hello-pangea/dnd": "^18.0.1",
     "@mui/material": "^6.1.5",
-    "font-detect-rhl": "^1.1.9",
     "md5": "^2.3.0",
-    "notistack": "^3.0.2",
     "pankosmia-lib": "^0.0.3",
     "pankosmia-rcl": "0.4.0",
-    "proskomma-core": "^0.11.3",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "react-router-dom": "^7.9.4"
@@ -35,7 +32,6 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "scripts": {
-    "publish": "npm run build:package  && cd ./src/components/translationPlanMuncher && npm publish",
     "build": "vite build",
     "build:package": "vite build --mode isMuncher",
     "dev": "vite",
