@@ -81,10 +81,37 @@ export async function getFirstChapterBCVNotes(
   }
 }
 
+export async function getFirstChapterTranslationPlan(
+  currentProjectRefCurr,
+  debugRefCurr,
+  bookCode,
+) {
+  const projectPath = `${currentProjectRefCurr.source}/${currentProjectRefCurr.organization}/${currentProjectRefCurr.project}`;
+  const response = await getJson(
+    `/api/burrito/ingredient/raw/${projectPath}?ipath=plan.json`,
+    debugRefCurr,
+  );
+  if (response.ok) {
+    const plan = await response.json;
+    const allBookCodes = [...new Set(plan.sections.map((s) => s.bookCode))];
+
+    // let responsePost = await postEmptyJson(
+    //   `/api/navigation/bcv/${bookCode}/${chapter}/${verse}`,
+    //   debugRefCurr,
+    // );
+    if (!response.ok) {
+      enqueueSnackbar(`${response.status}`, { variant: "error" });
+    }
+  } else {
+    enqueueSnackbar(`${response.status}`, { variant: "error" });
+  }
+}
 export function getFirstChapter(flavor) {
   switch (flavor) {
-    case "textTranslation":
+    case "x-juxtalinear":
       return getFirstChapterJuxta;
+    case "x-translationplan":
+      return getFirstChapterTranslationPlan;
     default:
       return getFirstChapterTextTranslation;
   }

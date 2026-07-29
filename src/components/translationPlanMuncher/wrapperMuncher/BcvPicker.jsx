@@ -9,22 +9,20 @@ export function BcvPicker() {
 
   const [bookCode, setBookCode] = useState(bcvRef.current.bookCode);
   const [chapter, setChapter] = useState(
-    Math.max(1, bcvRef.current.chapterNum),
+    Math.max(1, bcvRef.current.chapterNum ?? 1),
   );
   const [verseStart, setVerseStart] = useState(
-    Math.max(1, bcvRef.current.verseNum),
+    Math.max(1, bcvRef.current.verseNum ?? 1),
   );
   const [verseEnd, setVerseEnd] = useState(
-    Math.max(1, bcvRef.current.endVerseNum),
+    Math.max(1, bcvRef.current.endVerseNum ?? 1),
   );
-  console.log("renders values", bookCode, chapter, verseStart, verseEnd);
-  console.log();
   useEffect(() => {
     if (bcvRef.current) {
       setBookCode(bcvRef.current.bookCode);
-      setChapter(bcvRef.current.chapterNum);
-      setVerseStart(bcvRef.current.verseNum);
-      setVerseEnd(bcvRef.current.endVerseNum);
+      setChapter(bcvRef.current.chapterNum ?? 1);
+      setVerseStart(bcvRef.current.verseNum ?? 1);
+      setVerseEnd(bcvRef.current.endVerseNum ?? 1);
     }
   }, [bcvRef.current]);
   const pickerSx = {
@@ -89,13 +87,14 @@ export function BcvPicker() {
         }
       >
         Go to {bookCode} {chapter}:{verseStart}
-        {verseEnd !== verseStart && `-${verseEnd}`}
+        {verseEnd !== verseStart && verseEnd && `-${verseEnd}`}
       </Button>
 
       <Typography>
         Current BCV is : {bcvRef.current.bookCode} {bcvRef.current.chapterNum}:
         {bcvRef.current.verseNum}
         {bcvRef.current.verseNum !== bcvRef.current.endVerseNum &&
+          bcvRef.current.endVerseNum &&
           `-${bcvRef.current.endVerseNum}`}{" "}
       </Typography>
     </Stack>

@@ -3,7 +3,8 @@ import { WrapperNav } from "../components/translationPlanMuncher/wrapperMuncher/
 import { useEffect, useContext, useState } from "react";
 import { getJson } from "pankosmia-lib/http";
 import { currentProjectContext, bcvContext } from "pankosmia-rcl";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
+import NewTranslationPlan from "./NewTranslationPlanContent";
 
 export default function MuncherTest() {
   const { bcvRef } = useContext(bcvContext);
@@ -37,7 +38,10 @@ export default function MuncherTest() {
     local_path: currentBurrito[0],
     ...currentBurrito[1],
   };
-
+  const handleCreate = () => {
+    window.location.href =
+      "/clients/core-contenthandler_translation_plan/#/createDocument/translationPlan";
+  };
   return (
     <Box
       sx={{
@@ -47,11 +51,12 @@ export default function MuncherTest() {
         height: "98vh",
       }}
     >
-      <WrapperNav flavor={"textTranslation"} />
+      <WrapperNav flavor={"x-translationplan"} />
 
       <Box sx={{ display: "flex", width: "100%", overflowY: "scroll" }}>
         {metadata && (
           <Box sx={{ flex: 1, margin: 2 }}>
+            <Button onClick={handleCreate}> Create Translation Plan </Button>
             <TranslationPlanViewerMuncher
               key={metadata.local_path}
               metadata={metadata}

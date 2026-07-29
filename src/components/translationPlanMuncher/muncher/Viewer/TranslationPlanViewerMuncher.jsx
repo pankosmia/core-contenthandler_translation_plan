@@ -45,7 +45,6 @@ function TranslationPlanViewerMuncher({ metadata }) {
   const handleOpenDialogAbout = () => {
     setOpenDialogAbout(true);
   };
-
   useEffect(() => {
     const getChapterText = async () => {
       if (!selectedBurrito || !systemBcv?.bookCode) {
@@ -90,8 +89,8 @@ function TranslationPlanViewerMuncher({ metadata }) {
       }
     }
 
-    fetchSummaries().then();
-  }, [selectedBurrito]);
+    fetchSummaries();
+  }, []);
 
   useEffect(() => {
     if (selectedBurrito !== null) {
@@ -244,7 +243,7 @@ function TranslationPlanViewerMuncher({ metadata }) {
                 })}
               </Box>
             )}
-            {!section && <Typography> no content found </Typography>}
+            {!section && <Typography> no section found </Typography>}
           </>
         )}
       </Box>

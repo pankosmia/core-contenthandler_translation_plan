@@ -11,7 +11,6 @@ function ScripturePicker({ burritos, selectedBurrito, setSelectedBurrito }) {
     const burrito = burritos.find((b) => b.name === name);
     setSelectedBurrito(burrito);
   };
-  console.log("burritos:", JSON.stringify(burritos, null, 2));
   return (
     <FormControl fullWidth sx={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
       <TextField
@@ -26,7 +25,7 @@ function ScripturePicker({ burritos, selectedBurrito, setSelectedBurrito }) {
         )}
       >
         {burritos.map((burrito) => (
-          <MenuItem key={burrito.id} value={burrito.id}>
+          <MenuItem key={burrito.path} value={burrito.name}>
             {burrito.name}
           </MenuItem>
         ))}

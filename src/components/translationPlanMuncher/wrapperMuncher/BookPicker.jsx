@@ -8,13 +8,14 @@ import {
   currentProjectContext as CurrentProjectContext,
   debugContext as DebugContext,
 } from "pankosmia-rcl";
+
 function BookPicker({ setFirstChapter, disable = false }) {
   const { bcvRef } = useContext(BcvContext);
   const { debugRef } = useContext(DebugContext);
   const { i18nRef } = useContext(I18nContext);
   const { currentProjectRef } = useContext(CurrentProjectContext);
   const [contentBooks, setContentBooks] = useState([]);
-  const [currentBook, setCurrentBook] = useState(bcvRef.current.bookCode);
+  const [currentBook, setCurrentBook] = useState(bcvRef.current.bookCode || "");
 
   useEffect(() => {
     const getProjectBooks = async () => {
