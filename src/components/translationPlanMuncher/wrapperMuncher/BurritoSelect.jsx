@@ -7,7 +7,6 @@ export function BurritoSelect({ flavor }) {
   const { currentProjectRef } = useContext(currentProjectContext);
   const [filteredSummary, setFilteredSummary] = useState(null);
   const [currentBurrito, setCurrentBurrito] = useState(null);
-
   useEffect(() => {
     async function getSummary() {
       let response = await getJson("/api/burrito/metadata/summaries");

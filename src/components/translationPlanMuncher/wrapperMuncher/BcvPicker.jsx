@@ -1,25 +1,57 @@
-import { Button, TextField, Stack, Typography } from "@mui/material";
-import { postEmptyJson } from "pankosmia-lib/http";
-import { useContext, useEffect, useState } from "react";
-import { bcvContext, debugContext } from "pankosmia-rcl";
+import React, { useState, useContext, useEffect } from "react";
+import { Box, MenuItem, TextField, Stack } from "@mui/material";
+import { getJson } from "pankosmia-lib/http";
+import { doI18n } from "pankosmia-lib/i18n";
+import {
+  bcvContext as BcvContext,
+  i18nContext as I18nContext,
+  currentProjectContext as CurrentProjectContext,
+  debugContext as DebugContext,
+} from "pankosmia-rcl";
+import ButtonBcv from "./ButtonBcv";
 
-export function BcvPicker() {
-  const { bcvRef } = useContext(bcvContext);
-  const { debugRef } = useContext(debugContext);
-
-  const [bookCode, setBookCode] = useState(bcvRef.current.bookCode);
+export default function BcvPicker({ setFirstChapter, disable = false }) {
+  const { bcvRef } = useContext(BcvContext);
+  const { debugRef } = useContext(DebugContext);
+  const { i18nRef } = useContext(I18nContext);
+  const { currentProjectRef } = useContext(CurrentProjectContext);
+  const [contentBooks, setContentBooks] = useState([]);
+  const [currentBook, setCurrentBook] = useState(bcvRef.current.bookCode || "");
   const [chapter, setChapter] = useState(
-    Math.max(1, bcvRef.current.chapterNum ?? 1),
+    Math.max(1, bcvRef.current.chapterNum),
   );
   const [verseStart, setVerseStart] = useState(
-    Math.max(1, bcvRef.current.verseNum ?? 1),
+    Math.max(1, bcvRef.current.verseNum),
   );
   const [verseEnd, setVerseEnd] = useState(
-    Math.max(1, bcvRef.current.endVerseNum ?? 1),
+    Math.max(1, bcvRef.current.endVerseNum),
   );
+
+  useEffect(() => {
+    const getProjectBooks = async () => {
+      if (currentProjectRef.current) {
+        const projectPath = `${currentProjectRef.current.source}/${currentProjectRef.current.organization}/${currentProjectRef.current.project}`;
+        const fullMetadataResponse = await getJson(
+          `/api/burrito/metadata/summary/${projectPath}`,
+          debugRef.current,
+        );
+        if (fullMetadataResponse.ok) {
+          setContentBooks(fullMetadataResponse.json.book_codes);
+          setCurrentBook(fullMetadataResponse.json.book_codes[0]);
+        } else {
+          enqueueSnackbar(
+            `${doI18n("pages:core-contenthandler_translation_plan:error", i18nRef.current)}: ${fullMetadataResponse.status}`,
+            { variant: "error" },
+          );
+        }
+      }
+    };
+    getProjectBooks().then();
+  }, [currentProjectRef.current]);
+
   useEffect(() => {
     if (bcvRef.current) {
-      setBookCode(bcvRef.current.bookCode);
+      setCurrentBook(bcvRef.current.bookCode);
       setChapter(bcvRef.current.chapterNum ?? 1);
       setVerseStart(bcvRef.current.verseNum ?? 1);
       setVerseEnd(bcvRef.current.endVerseNum ?? 1);
@@ -34,6 +66,25 @@ export function BcvPicker() {
 
   return (
     <Stack direction="row" spacing={1} alignItems="center">
+      <TextField
+        disabled={disable}
+        label={`${doI18n("pages:core-local-workspace:book", i18nRef.current)}`}
+        id="book-button"
+        size="small"
+        select
+        value={currentBook}
+      >
+        {contentBooks.map((b, n) => (
+          <MenuItem
+            sx={{ maxHeight: "3rem", height: "2rem" }}
+            value={b}
+            key={n}
+            onClick={() => setCurrentBook(b)}
+          >
+            {doI18n(`scripture:books:${b}`, i18nRef.current)}
+          </MenuItem>
+        ))}
+      </TextField>
       <TextField
         sx={pickerSx}
         size="small"
@@ -62,7 +113,6 @@ export function BcvPicker() {
           }
         }}
       />
-
       <TextField
         sx={pickerSx}
         size="small"
@@ -75,28 +125,12 @@ export function BcvPicker() {
           setVerseEnd(value);
         }}
       />
-
-      <Button
-        sx={{ height: 40 }}
-        variant="contained"
-        onClick={() =>
-          postEmptyJson(
-            `/api/navigation/bcv/${bookCode}/${chapter}/${verseStart}/${verseEnd}`,
-            debugRef.current,
-          )
-        }
-      >
-        Go to {bookCode} {chapter}:{verseStart}
-        {verseEnd !== verseStart && verseEnd && `-${verseEnd}`}
-      </Button>
-
-      <Typography>
-        Current BCV is : {bcvRef.current.bookCode} {bcvRef.current.chapterNum}:
-        {bcvRef.current.verseNum}
-        {bcvRef.current.verseNum !== bcvRef.current.endVerseNum &&
-          bcvRef.current.endVerseNum &&
-          `-${bcvRef.current.endVerseNum}`}{" "}
-      </Typography>
+      <ButtonBcv
+        bookCode={currentBook}
+        chapter={chapter}
+        verseStart={verseStart}
+        verseEnd={verseEnd}
+      />
     </Stack>
   );
 }
