@@ -1,10 +1,10 @@
 {
-  "name": "pankosmia-tranlationPlan-muncher",
+  "name": "pankosmia-translationPlan-muncher",
   "version": "0.2.0",
   "private": false,
-  "homepage": "/clients/pankosmia-tranlationPlan-muncher",
-  "main": "munchers/tranlationPlan-muncher-rcl.umd.js",
-  "module": "munchers/tranlationPlan-muncher-rcl.es.js",
+  "homepage": "/clients/pankosmia-translationPlan-muncher",
+  "main": "munchers/translationPlan-muncher-rcl.umd.js",
+  "module": "munchers/translationPlan-muncher-rcl.es.js",
   "files": [
     "munchers"
   ],
