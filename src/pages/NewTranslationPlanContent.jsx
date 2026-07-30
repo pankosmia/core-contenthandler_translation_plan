@@ -60,16 +60,23 @@ export default function NewTranslationPlan() {
   ];
   const handleClose = () => {
     setOpen(false);
-    if (returnType === "dashboard") {
-      setTimeout(() => {
-        window.location.href = "/clients/main";
-      });
-    } else {
-      setTimeout(() => {
-        window.location.href = "/clients/content";
-      });
+    switch (returnType) {
+      case "dashboard":
+        return setTimeout(() => {
+          window.location.href = "/clients/main";
+        });
+      case "munchertest":
+        return setTimeout(() => {
+          window.location.href =
+            "/clients/core-contenthandler_translation_plan/#/MuncherTest";
+        });
+      default:
+        setTimeout(() => {
+          window.location.href = "/clients/content";
+        });
     }
   };
+
   useEffect(() => {
     if (open) {
       getAndSetJson({

@@ -40,7 +40,7 @@ export default function MuncherTest() {
   };
   const handleCreate = () => {
     window.location.href =
-      "/clients/core-contenthandler_translation_plan/#/createDocument/translationPlan";
+      "/clients/core-contenthandler_translation_plan/#/createDocument/translationPlan?returnTypePage=munchertest";
   };
   return (
     <Box
