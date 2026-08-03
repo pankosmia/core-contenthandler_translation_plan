@@ -2,26 +2,15 @@
   "name": "core-contenthandler_translation_plan",
   "version": "0.2.0",
   "private": false,
-  "homepage": "/clients/core-contenthandler_translation_plan",
-  "main": "munchers/translationPlan-muncher-rcl.umd.js",
-  "module": "munchers/translationPlan-muncher-rcl.es.js",
-  "files": [
-    "munchers"
-  ],
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@hello-pangea/dnd": "^18.0.1",
     "@mui/material": "^6.1.5",
     "font-detect-rhl": "^1.1.9",
-    "md5": "^2.3.0",
     "notistack": "^3.0.2",
     "pankosmia-lib": "^0.0.3",
     "pankosmia-rcl": "0.4.0",
-    "proskomma-core": "^0.11.3",
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0",
-    "react-router-dom": "^7.9.4"
+    "proskomma-core": "^0.11.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -31,11 +20,12 @@
     "vite": "^6.0.7"
   },
   "peerDependencies": {
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.27.0"
   },
   "scripts": {
-    "publish": "npm run build:package  && cd ./src/components/translationPlanMuncher && npm publish",
+    "publish": "npm run build:package  && cd ./src/components/translationPlanMuncher && npm publish --dry-run",
     "build": "vite build",
     "build:package": "vite build --mode isMuncher",
     "dev": "vite",

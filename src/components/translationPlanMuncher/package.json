@@ -1,24 +1,22 @@
 {
-  "name": "pankosmia-translationPlan-muncher",
+  "name": "pankosmia-translation_plan-muncher",
   "version": "0.2.0",
   "private": false,
-  "homepage": "/clients/pankosmia-translationPlan-muncher",
-  "main": "munchers/translationPlan-muncher-rcl.umd.js",
-  "module": "munchers/translationPlan-muncher-rcl.es.js",
+  "homepage": "https://github.com/pankosmia/core-contenthandler_translation_plan",
+  "main": "munchersPackageExport/translation_plan-muncher-rcl.umd.js",
+  "module": "munchersPackageExport/translation_plan-muncher-rcl.es.js",
   "files": [
-    "munchers"
+    "munchersPackageExport"
   ],
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@hello-pangea/dnd": "^18.0.1",
     "@mui/material": "^6.1.5",
-    "md5": "^2.3.0",
+    "font-detect-rhl": "^1.1.9",
+    "notistack": "^3.0.2",
     "pankosmia-lib": "^0.0.3",
     "pankosmia-rcl": "0.4.0",
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0",
-    "react-router-dom": "^7.9.4"
+    "proskomma-core": "^0.11.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -28,8 +26,9 @@
     "vite": "^6.0.7"
   },
   "peerDependencies": {
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.27.0"
   },
   "scripts": {
     "build": "vite build",
