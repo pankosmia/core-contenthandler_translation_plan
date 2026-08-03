@@ -2,8 +2,9 @@ import { createRoot } from "react-dom/client";
 import { SpaContainer, fallbackTheme } from "pankosmia-rcl";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import App from "./App";
+import App from "./pages/App";
 import NewTranslationPlan from "./pages/NewTranslationPlanContent";
+import MuncherTest from "./pages/MuncherTest";
 import { ThemeProvider } from "@emotion/react";
 import { SnackbarProvider, MaterialDesignContent } from "notistack";
 import { useEffect, useState } from "react";
@@ -18,6 +19,10 @@ const router = createHashRouter([
   {
     path: "createDocument/translationPlan",
     element: <NewTranslationPlan />,
+  },
+  {
+    path: "/MuncherTest",
+    element: <MuncherTest />,
   },
 ]);
 

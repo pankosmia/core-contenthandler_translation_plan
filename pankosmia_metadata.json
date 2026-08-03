@@ -47,6 +47,10 @@
     "year": {
       "en": "Year",
       "fr": "Année"
+    },
+    "error": {
+      "en": "Error happened :",
+      "fr": "Une erreur est survenue: "
     }
   }
 }
