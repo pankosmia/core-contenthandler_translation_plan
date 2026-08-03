@@ -26,7 +26,7 @@
     "react-router-dom": "^6.27.0"
   },
   "scripts": {
-    "publish": "npm run build:package  && cd ./src/components/translationPlanMuncher && npm publish ",
+    "publish": "npm run build:package  && cd ./src/components/translationPlanMuncher && npm publish",
     "build": "vite build",
     "build:package": "vite build --mode isMuncher",
     "dev": "vite",
