@@ -1,6 +1,6 @@
 {
   "name": "pankosmia-translation_plan-muncher",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "homepage": "https://github.com/pankosmia/core-contenthandler_translation_plan",
   "main": "munchersPackageExport/translation_plan-muncher-rcl.umd.js",
