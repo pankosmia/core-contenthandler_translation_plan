@@ -3,8 +3,13 @@ import GraphiteTest from "./GraphiteTest";
 import { typographyContext } from "pankosmia-rcl";
 import { useContext } from "react";
 
-function NonScriptureField({ key, planIngredient, section, field }) {
-  const { typographyRef } = useContext(typographyContext);
+function NonScriptureField({
+  key,
+  planIngredient,
+  section,
+  field,
+  typographyRef,
+}) {
   const styleParaTag = field.paraTag || "";
   const value =
     section.fieldInitialValues[field.name] ||
