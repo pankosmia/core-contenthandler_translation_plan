@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { getText } from "pankosmia-lib/http";
 
-import { bcvContext as BcvContext, debugContext } from "pankosmia-rcl";
-
 import InfoIcon from "@mui/icons-material/Info";
 import TextDir from "../helpers/TextDir";
 import ExtractJsonValues from "../helpers/ExtractJsonValues";
@@ -15,10 +13,14 @@ import NonScriptureField from "./ViewerTools/NonScriptureField";
 import JumpButton from "./ViewerTools/JumpButton";
 import SectionReference from "./ViewerTools/SectionReference";
 
-function TranslationPlanViewerMuncher({ metadata }) {
+function TranslationPlanViewerMuncher({
+  metadata,
+  debugRef,
+  systemBcv,
+  i18nRef,
+  typographyRef,
+}) {
   const [planIngredient, setPlanIngredient] = useState();
-  const { systemBcv } = useContext(BcvContext);
-  const { debugRef } = useContext(debugContext);
   const [verseText, setVerseText] = useState({});
   const [burritos, setBurritos] = useState([]);
   const [selectedBurrito, setSelectedBurrito] = useState(null);
@@ -202,6 +204,8 @@ function TranslationPlanViewerMuncher({ metadata }) {
           anchorEl={anchorEl}
           setAnchorEl={setAnchorEl}
           open={open}
+          i18nRef={i18nRef}
+          debugRef={debugRef}
         />
         <IconButton onClick={handleOpenDialogAbout}>
           <InfoIcon />
@@ -212,6 +216,7 @@ function TranslationPlanViewerMuncher({ metadata }) {
           burritos={burritos}
           selectedBurrito={selectedBurrito}
           setSelectedBurrito={setSelectedBurrito}
+          i18nRef={i18nRef}
         />
 
         {selectedBurrito && (
@@ -237,6 +242,7 @@ function TranslationPlanViewerMuncher({ metadata }) {
                         planIngredient={planIngredient}
                         section={section}
                         field={field}
+                        typographyRef={typographyRef}
                       />
                     );
                   }
@@ -252,6 +258,7 @@ function TranslationPlanViewerMuncher({ metadata }) {
         planIngredient={planIngredient}
         openDialogAbout={openDialogAbout}
         setOpenDialogAbout={setOpenDialogAbout}
+        i18nRef={i18nRef}
       />
     </Box>
   );

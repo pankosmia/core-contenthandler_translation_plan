@@ -1,16 +1,14 @@
 import { DialogContent, DialogContentText, Typography } from "@mui/material";
 import { PanDialog, PanDialogActions } from "pankosmia-rcl";
 import { doI18n } from "pankosmia-lib/i18n";
-import { useContext } from "react";
 import { i18nContext } from "pankosmia-rcl";
 function InformationDialog({
   theme,
   planIngredient,
   openDialogAbout,
   setOpenDialogAbout,
+  i18nRef,
 }) {
-  const { i18nRef } = useContext(i18nContext);
-
   return (
     <PanDialog
       titleLabel={`${doI18n(`pages:core-local-workspace:about_dialog`, i18nRef.current)} - ${planIngredient.name} `}

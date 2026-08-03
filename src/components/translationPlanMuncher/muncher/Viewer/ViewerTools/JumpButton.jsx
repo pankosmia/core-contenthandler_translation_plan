@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { postEmptyJson } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
-import { i18nContext, debugContext } from "pankosmia-rcl";
 import SearchIcon from "@mui/icons-material/Search";
 import { useContext, useState } from "react";
 
@@ -19,9 +18,9 @@ function JumpButton({
   anchorEl,
   setAnchorEl,
   open,
+  i18nRef,
+  debugRef,
 }) {
-  const { i18nRef } = useContext(i18nContext);
-  const { debugRef } = useContext(debugContext);
   const ITEM_HEIGHT = 48;
 
   const [search, setSearch] = useState("");

@@ -1,11 +1,13 @@
 import { FormControl, MenuItem, TextField } from "@mui/material";
 import { doI18n } from "pankosmia-lib/i18n";
-import { i18nContext } from "pankosmia-rcl";
 import { useContext } from "react";
 
-function ScripturePicker({ burritos, selectedBurrito, setSelectedBurrito }) {
-  const { i18nRef } = useContext(i18nContext);
-
+function ScripturePicker({
+  burritos,
+  selectedBurrito,
+  setSelectedBurrito,
+  i18nRef,
+}) {
   const handleSelectBurrito = (event) => {
     const name = event.target.value;
     const burrito = burritos.find((b) => b.name === name);
