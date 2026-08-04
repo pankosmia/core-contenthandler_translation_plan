@@ -1,7 +1,7 @@
 import { DialogContent, DialogContentText, Typography } from "@mui/material";
 import { PanDialog, PanDialogActions } from "pankosmia-rcl";
 import { doI18n } from "pankosmia-lib/i18n";
-import { i18nContext } from "pankosmia-rcl";
+
 function InformationDialog({
   theme,
   planIngredient,

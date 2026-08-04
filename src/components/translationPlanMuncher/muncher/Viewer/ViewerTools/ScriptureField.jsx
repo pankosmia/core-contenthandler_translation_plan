@@ -10,7 +10,7 @@ function ScriptureField({
   const activeVerseRef = useRef(null);
 
   useEffect(() => {
-    if (activeVerseRef.current) {
+    if (activeVerseRef?.current) {
       activeVerseRef.current.scrollIntoView({
         behavior: "smooth",
         block: "center",

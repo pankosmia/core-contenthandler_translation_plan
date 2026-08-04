@@ -2,12 +2,21 @@ import TranslationPlanViewerMuncher from "../components/translationPlanMuncher/m
 import { WrapperNav } from "../components/translationPlanMuncher/wrapperMuncher/WrapperNav";
 import { useEffect, useContext, useState } from "react";
 import { getJson } from "pankosmia-lib/http";
-import { currentProjectContext, bcvContext } from "pankosmia-rcl";
+import {
+  currentProjectContext,
+  bcvContext,
+  debugContext,
+  i18nContext,
+  typographyContext,
+} from "pankosmia-rcl";
 import { Box, Button } from "@mui/material";
 import NewTranslationPlan from "./NewTranslationPlanContent";
 
 export default function MuncherTest() {
-  const { bcvRef } = useContext(bcvContext);
+  const { systemBcv } = useContext(bcvContext);
+  const { debugRef } = useContext(debugContext);
+  const { i18nRef } = useContext(i18nContext);
+  const { typographyRef } = useContext(typographyContext);
   const { currentProjectRef } = useContext(currentProjectContext);
   const [currentBurrito, setCurrentBurrito] = useState(null);
   const [modified, setModified] = useState(false);
@@ -60,6 +69,10 @@ export default function MuncherTest() {
             <TranslationPlanViewerMuncher
               key={metadata.local_path}
               metadata={metadata}
+              debugRef={debugRef}
+              systemBcv={systemBcv}
+              i18nRef={i18nRef}
+              typographyRef={typographyRef}
             />
           </Box>
         )}
