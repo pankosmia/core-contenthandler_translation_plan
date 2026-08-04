@@ -10,7 +10,7 @@
     "font-detect-rhl": "^1.1.9",
     "notistack": "^3.0.2",
     "pankosmia-lib": "^0.0.3",
-    "pankosmia-rcl": "0.4.0",
+    "pankosmia-rcl": "0.4.6",
     "proskomma-core": "^0.11.3"
   },
   "devDependencies": {
