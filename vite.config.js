@@ -27,13 +27,19 @@ export default defineConfig(({ mode }) => {
           sourcemap: true,
 
           rollupOptions: {
-            external: ["react", "react-dom", "react-router-dom"],
+            external: [
+              "react",
+              "react-dom",
+              "react-router-dom",
+              "pankosmia-rcl",
+            ],
             output: {
               name: "translationPlanRcl",
               globals: {
                 react: "React",
                 "react-dom": "ReactDOM",
                 "react-router-dom": "ReactRouterDOM",
+                "pankosmia-rcl": "pankosmiaRcl",
               },
             },
           },
