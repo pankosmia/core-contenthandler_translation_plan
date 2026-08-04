@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { getText } from "pankosmia-lib/http";
 
@@ -30,6 +30,7 @@ function TranslationPlanViewerMuncher({
       ? metadata.script_direction.toLowerCase()
       : undefined,
   );
+
   const [selectedBurritoSbTextDir, setSelectedBurritoSbTextDir] =
     useState(undefined);
   const [selectedBurritoTextDir, setSelectedBurritoTextDir] =
