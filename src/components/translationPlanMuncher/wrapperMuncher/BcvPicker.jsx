@@ -10,7 +10,7 @@ import {
 } from "pankosmia-rcl";
 import ButtonBcv from "./ButtonBcv";
 
-export default function BcvPicker({ setFirstChapter, disable = false }) {
+export default function BcvPicker({ disable = false }) {
   const { bcvRef } = useContext(BcvContext);
   const { debugRef } = useContext(DebugContext);
   const { i18nRef } = useContext(I18nContext);

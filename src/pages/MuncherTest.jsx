@@ -14,10 +14,15 @@ import NewTranslationPlan from "./NewTranslationPlanContent";
 
 export default function MuncherTest() {
   const { systemBcv } = useContext(bcvContext);
+  console.log("🚀 ~ MuncherTest ~ systemBcv:", systemBcv);
   const { debugRef } = useContext(debugContext);
+  console.log("🚀 ~ MuncherTest ~ debugRef:", debugRef);
   const { i18nRef } = useContext(i18nContext);
+  console.log("🚀 ~ MuncherTest ~ i18nRef:", i18nRef);
   const { typographyRef } = useContext(typographyContext);
+  console.log("🚀 ~ MuncherTest ~ typographyRef:", typographyRef);
   const { currentProjectRef } = useContext(currentProjectContext);
+  console.log("🚀 ~ MuncherTest ~ currentProjectRef:", currentProjectRef);
   const [currentBurrito, setCurrentBurrito] = useState(null);
   const [modified, setModified] = useState(false);
 
@@ -51,6 +56,7 @@ export default function MuncherTest() {
     window.location.href =
       "/clients/core-contenthandler_translation_plan/#/createDocument/translationPlan?returnTypePage=munchertest";
   };
+
   return (
     <Box
       sx={{
