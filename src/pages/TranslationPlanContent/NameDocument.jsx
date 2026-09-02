@@ -1,7 +1,7 @@
 import {
   FormControl,
   FormControlLabel,
-  Grid2,
+  Grid,
   Radio,
   RadioGroup,
   TextField,
@@ -36,8 +36,8 @@ export default function NameDocument({
   };
 
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 size={12}>
+    <Grid container spacing={2}>
+      <Grid size={12}>
         <SectionDialog titleSection="Name">
           <TextField
             id="name"
@@ -83,9 +83,9 @@ export default function NameDocument({
             />
           </Tooltip>
         </SectionDialog>
-      </Grid2>
+      </Grid>
 
-      <Grid2 size={12}>
+      <Grid size={12}>
         <SectionDialog titleSection="Copyright">
           <FormControl>
             <RadioGroup
@@ -144,7 +144,7 @@ export default function NameDocument({
             </>
           )}
         </SectionDialog>
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
