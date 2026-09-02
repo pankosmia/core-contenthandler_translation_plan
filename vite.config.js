@@ -32,6 +32,7 @@ export default defineConfig(({ mode }) => {
               "react-dom",
               "react-router-dom",
               "pankosmia-rcl",
+              "notistack",
             ],
             output: {
               name: "translationPlanRcl",
@@ -40,6 +41,7 @@ export default defineConfig(({ mode }) => {
                 "react-dom": "ReactDOM",
                 "react-router-dom": "ReactRouterDOM",
                 "pankosmia-rcl": "pankosmiaRcl",
+                notistack: "notistack",
               },
             },
           },

@@ -1,0 +1,12 @@
+allowBuilds:
+  core-js-pure: true
+  esbuild: true
+supportedArchitectures:
+  os:
+    - win32
+    - linux
+    - darwin
+    - current
+  cpu:
+    - x64
+    - arm64
