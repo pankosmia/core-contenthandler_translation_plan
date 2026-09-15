@@ -9,14 +9,15 @@ function ScriptureField({
 }) {
   const activeVerseRef = useRef(null);
 
-  useEffect(() => {
+  // Automatic scroll that was causing the translation plan to jump to verse 1, missing a lot of content. (This works fine for other resources)
+  /*   useEffect(() => {
     if (activeVerseRef?.current) {
       activeVerseRef.current.scrollIntoView({
         behavior: "smooth",
         block: "center",
       });
     }
-  }, [systemBcv?.chapterNum, systemBcv?.verseNum]);
+  }, [systemBcv?.chapterNum, systemBcv?.verseNum]); */
 
   const getVerseData = (chapter, verse) => {
     const chapterData = verseText?.[chapter.toString()] || {};
