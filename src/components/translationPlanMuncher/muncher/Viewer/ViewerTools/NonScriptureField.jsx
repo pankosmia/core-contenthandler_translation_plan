@@ -47,12 +47,7 @@ function NonScriptureField({
         {styleParaTag}
       </Typography>
 
-      <div
-        className={`${adjSelectedFontClass} span_edit_graft ${styleParaTag}`}
-        size="small"
-      >
-        {value}
-      </div>
+      <div className={`${adjSelectedFontClass} ${styleParaTag}`}>{value}</div>
     </div>
   );
 }
