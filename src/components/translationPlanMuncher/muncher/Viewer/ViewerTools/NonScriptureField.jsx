@@ -47,9 +47,7 @@ function NonScriptureField({
         {styleParaTag}
       </Typography>
 
-      <div className={`${adjSelectedFontClass}${styleParaTag}`} size="small">
-        {value}
-      </div>
+      <div className={`${adjSelectedFontClass} ${styleParaTag}`}>{value}</div>
     </div>
   );
 }
