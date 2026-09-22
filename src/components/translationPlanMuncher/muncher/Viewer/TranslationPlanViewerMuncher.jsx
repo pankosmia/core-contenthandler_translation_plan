@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { getText } from "pankosmia-lib/http";
 
@@ -36,6 +36,7 @@ function TranslationPlanViewerMuncher({
   const [selectedBurritoTextDir, setSelectedBurritoTextDir] =
     useState(undefined);
   const [openDialogAbout, setOpenDialogAbout] = useState(false);
+  const sectionTopRef = useRef(null);
 
   const sbScriptDir = metadata?.script_direction
     ? metadata.script_direction.toLowerCase()
@@ -178,15 +179,26 @@ function TranslationPlanViewerMuncher({
     return true;
   };
 
-  if (!planIngredient) {
-    return <Typography> loading...</Typography>;
-  }
-
-  const section = planIngredient.sections?.find(
+  const section = planIngredient?.sections?.find(
     (section) =>
       section.bookCode === systemBcv.bookCode &&
       isInInterval(section, systemBcv),
   );
+
+  const sectionId = section ? `${section.bookCode}-${section.cv[0]}` : null;
+
+  useEffect(() => {
+    if (sectionTopRef.current) {
+      sectionTopRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [sectionId]);
+
+  if (!planIngredient) {
+    return <Typography> loading...</Typography>;
+  }
 
   // If SB does not specify direction then it is set here, otherwise it has already been set per SB in WorkspaceCard
   return (
@@ -223,7 +235,7 @@ function TranslationPlanViewerMuncher({
         {selectedBurrito && (
           <>
             {section && (
-              <Box sx={{ padding: 1 }}>
+              <Box ref={sectionTopRef} sx={{ padding: 1 }}>
                 <SectionReference section={section} />
                 {planIngredient.sectionStructure.map((field, i) => {
                   if (field.type === "scripture") {
