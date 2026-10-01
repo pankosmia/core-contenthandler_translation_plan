@@ -11,7 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^9.3.1",
+    "@mui/icons-material": "^6.1.5",
     "@mui/material": "^9.3.1",
     "font-detect-rhl": "^1.1.9",
     "pankosmia-lib": "^0.0.3",
@@ -27,7 +27,7 @@
   },
   "peerDependencies": {
     "notistack": "^3.0.2",
-    "pankosmia-rcl": "^0.7.1",
+    "pankosmia-rcl": "^0.7.5",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^6.27.0"

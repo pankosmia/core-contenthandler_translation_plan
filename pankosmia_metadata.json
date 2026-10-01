@@ -44,6 +44,10 @@
       "en": "Author or organisation name",
       "fr": "Nom"
     },
+    "unspecified_copyright": {
+      "en": "Unspecified",
+      "fr": "Non spécifié"
+    },
     "year": {
       "en": "Year",
       "fr": "Année"
