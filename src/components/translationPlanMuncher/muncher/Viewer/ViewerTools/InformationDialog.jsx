@@ -14,7 +14,6 @@ function InformationDialog({
       titleLabel={`${doI18n(`pages:core-local-workspace:about_dialog`, i18nRef.current)} - ${planIngredient.name} `}
       isOpen={openDialogAbout}
       closeFn={() => setOpenDialogAbout(false)}
-      theme={theme}
     >
       <DialogContent>
         {Object.entries(planIngredient).map(([key, value]) => {

@@ -267,7 +267,6 @@ function TranslationPlanViewerMuncher({
         )}
       </Box>
       <InformationDialog
-        theme={theme}
         planIngredient={planIngredient}
         openDialogAbout={openDialogAbout}
         setOpenDialogAbout={setOpenDialogAbout}
