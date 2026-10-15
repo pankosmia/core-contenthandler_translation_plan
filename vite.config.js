@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
           ],
 
           output: {
-            name: "juxtaMunchersRcl",
+            name: "translationPlanRcl",
             globals: {
               react: "React",
               "react-dom": "ReactDOM",
