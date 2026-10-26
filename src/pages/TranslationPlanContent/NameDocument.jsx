@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { doI18n } from "pankosmia-lib/i18n";
-import { i18nContext } from "pankosmia-rcl";
+import { i18nContext, PanCopyright } from "pankosmia-rcl";
 import { useContext } from "react";
 import SectionDialog from "../SectionDialog";
 
@@ -86,64 +86,12 @@ export default function NameDocument({
       </Grid>
 
       <Grid size={12}>
-        <SectionDialog titleSection="Copyright">
-          <FormControl>
-            <RadioGroup
-              value={optionCopyright}
-              onChange={handleChange}
-              row
-              name="row-radio-buttons-group"
-            >
-              <FormControlLabel
-                value="all_rights_reserved"
-                control={<Radio />}
-                label="All rights reserved"
-              />
-              <FormControlLabel
-                value="public-domain"
-                control={<Radio />}
-                label={doI18n(
-                  "pages:core-contenthandler_translation_plan:public_domain",
-                  i18nRef.current,
-                )}
-              />
-            </RadioGroup>
-          </FormControl>
-          {optionCopyright === "all_rights_reserved" && (
-            <>
-              <TextField
-                id="author_name"
-                sx={{ width: "100%" }}
-                required
-                label={doI18n(
-                  "pages:core-contenthandler_translation_plan:author_name",
-                  i18nRef.current,
-                )}
-                value={copyright.author_name}
-                onChange={(e) =>
-                  setCopyright({ ...copyright, author_name: e.target.value })
-                }
-              />
-
-              <TextField
-                sx={{ width: "100%" }}
-                id="year"
-                required
-                label={doI18n(
-                  "pages:core-contenthandler_translation_plan:year",
-                  i18nRef.current,
-                )}
-                value={copyright.year}
-                onChange={(e) =>
-                  setCopyright({
-                    ...copyright,
-                    year: e.target.value.replace(/\D/g, "").slice(0, 4),
-                  })
-                }
-              />
-            </>
-          )}
-        </SectionDialog>
+        <PanCopyright
+          optionCopyright={optionCopyright}
+          setOptionCopyright={setOptionCopyright}
+          copyright={copyright}
+          setCopyright={setCopyright}
+        />
       </Grid>
     </Grid>
   );

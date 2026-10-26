@@ -2,7 +2,7 @@
   "id": "core-contenthandler_translation_plan",
   "exclude_from_menu": true,
   "exclude_from_dashboard": true,
-  "minServerVersion": "0.16.1",
+  "minServerVersion": "0.18.15",
   "require": {
     "net": false,
     "debug": true
@@ -43,6 +43,10 @@
     "author_name": {
       "en": "Author or organisation name",
       "fr": "Nom"
+    },
+    "unspecified_copyright": {
+      "en": "Unspecified",
+      "fr": "Non spécifié"
     },
     "year": {
       "en": "Year",

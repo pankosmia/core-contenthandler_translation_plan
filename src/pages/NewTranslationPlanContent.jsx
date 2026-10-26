@@ -44,14 +44,24 @@ export default function NewTranslationPlan() {
     author_name: "",
     year: "",
   });
-  const [optionCopyright, setOptionCopyright] = useState("all_rights_reserved");
-  const fullCopyright =
-    optionCopyright !== "public-domain"
-      ? `${copyright.author_name} ${copyright.year}`
-      : `${doI18n(
+  const [optionCopyright, setOptionCopyright] = useState("unspecified");
+
+  function fullCopyright(optionCopyright) {
+    switch (optionCopyright) {
+      case "all_rights_reserved":
+        return `${copyright.author_name} ${copyright.year}`;
+      case "public-domain":
+        return `${doI18n(
           "pages:core-contenthandler_translation_plan:public_domain",
           i18nRef.current,
         )}`;
+      default:
+        return `${doI18n(
+          "pages:core-contenthandler_translation_plan:unspecified_copyright",
+          i18nRef.current,
+        )}`;
+    }
+  }
 
   const steps = [
     `${doI18n("pages:core-contenthandler_text_translation:content_section", i18nRef.current)}`,
@@ -71,7 +81,7 @@ export default function NewTranslationPlan() {
             "/clients/core-contenthandler_translation_plan/#/MuncherTest";
         });
       default:
-        setTimeout(() => {
+        return setTimeout(() => {
           window.location.href = "/clients/content";
         });
     }
@@ -112,7 +122,7 @@ export default function NewTranslationPlan() {
       content_language_name: currentLanguage.language_name,
       versification: submittedVersification,
       plan: planJson && JSON.stringify(planJson),
-      copyright: fullCopyright,
+      copyright: fullCopyright(optionCopyright),
     };
     const response = await postJson(
       "/api/git/new-translation-plan-resource",
