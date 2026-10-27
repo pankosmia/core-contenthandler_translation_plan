@@ -8,9 +8,9 @@ import {
   Tooltip,
 } from "@mui/material";
 import { doI18n } from "pankosmia-lib/i18n";
-import { i18nContext, PanCopyright } from "pankosmia-rcl";
+import { i18nContext, PanCopyright,SectionDialogTitle } from "pankosmia-rcl";
 import { useContext } from "react";
-import SectionDialog from "../SectionDialog";
+
 
 export default function NameDocument({
   contentType,
@@ -38,7 +38,7 @@ export default function NameDocument({
   return (
     <Grid container spacing={2}>
       <Grid size={12}>
-        <SectionDialog titleSection="Name">
+        <SectionDialogTitle titleSection="Name">
           <TextField
             id="name"
             sx={{ width: "100%" }}
@@ -82,7 +82,7 @@ export default function NameDocument({
               }}
             />
           </Tooltip>
-        </SectionDialog>
+        </SectionDialogTitle>
       </Grid>
 
       <Grid size={12}>

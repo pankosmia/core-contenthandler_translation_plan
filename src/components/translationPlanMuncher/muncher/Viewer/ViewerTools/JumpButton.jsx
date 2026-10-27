@@ -6,7 +6,7 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import { postEmptyJson } from "pankosmia-lib/http";
+import { postEmpty } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import SearchIcon from "@mui/icons-material/Search";
 import { useContext, useState } from "react";
@@ -33,7 +33,7 @@ function JumpButton({
     return label.includes(search.toLowerCase());
   });
   const updateBcv = (b, c, v) => {
-    postEmptyJson(`/api/navigation/bcv/${b}/${c}/${v}`, debugRef.current);
+    postEmpty(`/api/navigation/bcv/${b}/${c}/${v}`, debugRef.current);
   };
 
   return (
