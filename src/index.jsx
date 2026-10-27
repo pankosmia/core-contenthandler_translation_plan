@@ -2,24 +2,19 @@ import { createRoot } from "react-dom/client";
 import { SpaContainer } from "pankosmia-rcl";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import App from "./pages/App";
-import NewTranslationPlan from "./pages/NewTranslationPlanContent";
-import MuncherTest from "./pages/MuncherTest";
+import NewTranslationPlan from "./pages/New/NewTranslationPlanContent";
+import MuncherTest from "./pages/Test/MuncherTest";
 import { SnackbarProvider, MaterialDesignContent } from "notistack";
 import { styled } from "@mui/material";
 
 const router = createHashRouter([
   {
     path: "/",
-    element: <App />,
+    element: <MuncherTest />,
   },
   {
     path: "createDocument/translationPlan",
     element: <NewTranslationPlan />,
-  },
-  {
-    path: "/MuncherTest",
-    element: <MuncherTest />,
   },
 ]);
 

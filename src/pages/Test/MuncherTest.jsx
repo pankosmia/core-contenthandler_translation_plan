@@ -1,5 +1,5 @@
-import TranslationPlanViewerMuncher from "../components/translationPlanMuncher/muncher/Viewer/TranslationPlanViewerMuncher";
-import { WrapperNav } from "../components/translationPlanMuncher/wrapperMuncher/WrapperNav";
+import TranslationPlanViewerMuncher from "../../components/translationPlanMuncher/muncher/Viewer/TranslationPlanViewerMuncher";
+import { WrapperNav } from "../../components/translationPlanMuncher/wrapperMuncher/WrapperNav";
 import { useEffect, useContext, useState } from "react";
 import { getJson } from "pankosmia-lib/http";
 import {
@@ -8,9 +8,10 @@ import {
   debugContext,
   i18nContext,
   typographyContext,
+  Header
 } from "pankosmia-rcl";
 import { Box, Button } from "@mui/material";
-import NewTranslationPlan from "./NewTranslationPlanContent";
+import NewTranslationPlan from "../New/NewTranslationPlanContent";
 
 export default function MuncherTest() {
   const { systemBcv } = useContext(bcvContext);
@@ -56,13 +57,22 @@ export default function MuncherTest() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        margin: 3,
-        height: "98vh",
+        height: "100%",
+        overflow: "hidden",
       }}
     >
-      <WrapperNav flavor={"x-translationplan"} />
+      <Box>
+        <Header
+          titleKey={"pages:core-contenthandler_translation_plan:titleMuncherTest"}
+          currentId="content"
+          requireNet={false}
+        />
+      </Box>
+      <Box sx={{ paddingLeft: 2, paddingTop: 2, flexShrink: 0 }}>
+        <WrapperNav flavor={"x-translationplan"} />
+      </Box>
 
-      <Box sx={{ display: "flex", width: "100%", overflowY: "scroll" }}>
+      <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
         {metadata && (
           <Box sx={{ flex: 1, margin: 2 }}>
             <Button onClick={handleCreate}> Create Translation Plan </Button>

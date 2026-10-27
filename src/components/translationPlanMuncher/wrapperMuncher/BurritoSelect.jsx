@@ -1,7 +1,7 @@
 import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { currentProjectContext } from "pankosmia-rcl";
-import { getJson, postEmptyJson } from "pankosmia-lib/http";
+import { getJson, postEmpty } from "pankosmia-lib/http";
 
 export function BurritoSelect({ flavor }) {
   const { currentProjectRef } = useContext(currentProjectContext);
@@ -38,9 +38,7 @@ export function BurritoSelect({ flavor }) {
 
   async function newBurritoSelected() {
     if (currentBurrito) {
-      await postEmptyJson(
-        `/api/app-state/current-project/${currentBurrito[0]}`,
-      );
+      await postEmpty(`/api/app-state/current-project/${currentBurrito[0]}`);
     }
   }
 
