@@ -1,8 +1,6 @@
 {
   "id": "core-contenthandler_translation_plan",
-  "exclude_from_menu": true,
-  "exclude_from_dashboard": true,
-  "minServerVersion": "0.18.15",
+  "minServerVersion": "0.20.3",
   "require": {
     "net": false,
     "debug": true
@@ -28,6 +26,9 @@
     },
     "stub_content": {
       "en": "Content goes here"
+    },
+    "titleMuncherTest": {
+      "en": "Flavor x-translationplan"
     },
     "new_translation_plan": {
       "en": "Translation Plan"

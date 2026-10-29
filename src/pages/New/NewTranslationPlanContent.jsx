@@ -5,14 +5,14 @@ import {
   Header,
   PanStepperPicker,
 } from "pankosmia-rcl";
-import ErrorDialog from "./TranslationPlanContent/ErrorDialog";
+import ErrorDialog from "../../components/New/ErrorDialog";
 import { Box, DialogContent } from "@mui/material";
 import { getAndSetJson, getJson, postJson } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import { useContext, useEffect, useState } from "react";
-import ContentDocument from "./TranslationPlanContent/ContentDocument";
-import LanguagePicker from "./TranslationPlanContent/LanguagePicker";
-import NameDocument from "./TranslationPlanContent/NameDocument";
+import ContentDocument from "../../components/New/ContentDocument";
+import LanguagePicker from "../../components/New/LanguagePicker";
+import NameDocument from "../../components/New/NameDocument";
 
 export default function NewTranslationPlan() {
   const { i18nRef } = useContext(i18nContext);
