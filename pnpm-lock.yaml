@@ -22,6 +22,9 @@ importers:
       font-detect-rhl:
         specifier: ^1.1.9
         version: 1.1.10(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      json-edit-react:
+        specifier: ^2.0.5
+        version: 2.0.5(react@19.2.8)
       notistack:
         specifier: 3.0.2
         version: 3.0.2(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -3875,6 +3878,14 @@ packages:
       {
         integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==,
       }
+
+  json-edit-react@2.0.5:
+    resolution:
+      {
+        integrity: sha512-9uWmd8zZ/K26S3gsNy5/sWxWMi7qYr/Lmv0rD/t5eCpzykiWm07Z8EuxCkuWUJFSpoGptjlVbLKeyGnbJuNlwQ==,
+      }
+    peerDependencies:
+      react: ">=18.0.0"
 
   json-parse-even-better-errors@2.3.1:
     resolution:
@@ -7847,6 +7858,10 @@ snapshots:
   jsesc@3.1.0: {}
 
   json-buffer@3.0.1: {}
+
+  json-edit-react@2.0.5(react@19.2.8):
+    dependencies:
+      react: 19.2.8
 
   json-parse-even-better-errors@2.3.1: {}
 

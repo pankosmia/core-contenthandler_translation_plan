@@ -1,4 +1,5 @@
 import TranslationPlanViewerMuncher from "../../components/translationPlanMuncher/muncher/Viewer/TranslationPlanViewerMuncher";
+import TranslationPlanEditorMuncher from "../../Editor";
 import { WrapperNav } from "../../components/translationPlanMuncher/wrapperMuncher/WrapperNav";
 import { useEffect, useContext, useState } from "react";
 import { getJson } from "pankosmia-lib/http";
@@ -8,7 +9,7 @@ import {
   debugContext,
   i18nContext,
   typographyContext,
-  Header
+  Header,
 } from "pankosmia-rcl";
 import { Box, Button } from "@mui/material";
 import NewTranslationPlan from "../New/NewTranslationPlanContent";
@@ -63,7 +64,9 @@ export default function MuncherTest() {
     >
       <Box>
         <Header
-          titleKey={"pages:core-contenthandler_translation_plan:titleMuncherTest"}
+          titleKey={
+            "pages:core-contenthandler_translation_plan:titleMuncherTest"
+          }
           currentId="content"
           requireNet={false}
         />
@@ -77,6 +80,19 @@ export default function MuncherTest() {
           <Box sx={{ flex: 1, margin: 2 }}>
             <Button onClick={handleCreate}> Create Translation Plan </Button>
             <TranslationPlanViewerMuncher
+              key={metadata.local_path}
+              metadata={metadata}
+              debugRef={debugRef}
+              systemBcv={systemBcv}
+              i18nRef={i18nRef}
+              typographyRef={typographyRef}
+            />
+          </Box>
+        )}
+        {metadata && (
+          <Box sx={{ flex: 1, margin: 2 }}>
+            <Button onClick={handleCreate}> Create Translation Plan </Button>
+            <TranslationPlanEditorMuncher
               key={metadata.local_path}
               metadata={metadata}
               debugRef={debugRef}

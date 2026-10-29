@@ -6,15 +6,20 @@ import NewTranslationPlan from "./pages/New/NewTranslationPlanContent";
 import MuncherTest from "./pages/Test/MuncherTest";
 import { SnackbarProvider, MaterialDesignContent } from "notistack";
 import { styled } from "@mui/material";
+import TranslationPlanEditorMuncher from "./Editor";
 
 const router = createHashRouter([
   {
     path: "/",
-    element: <MuncherTest />,
+    element: <TranslationPlanEditorMuncher />,
   },
   {
     path: "createDocument/translationPlan",
     element: <NewTranslationPlan />,
+  },
+  {
+    path: "editor",
+    element: <MuncherTest />,
   },
 ]);
 
