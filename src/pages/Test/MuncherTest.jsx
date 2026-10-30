@@ -1,5 +1,5 @@
 import TranslationPlanViewerMuncher from "../../components/translationPlanMuncher/muncher/Viewer/TranslationPlanViewerMuncher";
-import TranslationPlanEditorMuncher from "../../Editor";
+import TranslationPlanEditorMuncher from "../Editor";
 import { WrapperNav } from "../../components/translationPlanMuncher/wrapperMuncher/WrapperNav";
 import { useEffect, useContext, useState } from "react";
 import { getJson } from "pankosmia-lib/http";
@@ -12,7 +12,6 @@ import {
   Header,
 } from "pankosmia-rcl";
 import { Box, Button } from "@mui/material";
-import NewTranslationPlan from "../New/NewTranslationPlanContent";
 
 export default function MuncherTest() {
   const { systemBcv } = useContext(bcvContext);
