@@ -26,11 +26,10 @@ function JumpButton({
   const [search, setSearch] = useState("");
 
   const filteredStories = planIngredient.sections?.filter((c) => {
-    const label = c.fieldInitialValues?.reference
+    const label = c.fieldInitialValues?.reference?.toLowerCase()
       ? `${c.fieldInitialValues.reference} ${c.fieldInitialValues.sectionTitle}`.toLowerCase()
       : `${c.bookCode} ${c.cv}`.toLowerCase();
-
-    return label.includes(search.toLowerCase());
+    return label.includes(search);
   });
   const updateBcv = (b, c, v) => {
     postEmpty(`/api/navigation/bcv/${b}/${c}/${v}`, debugRef.current);
@@ -97,13 +96,13 @@ function JumpButton({
               <Tooltip
                 key={i}
                 title={
-                  c.fieldInitialValues.reference || `${c.bookCode} ${c.cv}`
+                  c.fieldInitialValues?.reference || `${c.bookCode} ${c.cv}`
                 }
               >
                 <MenuItem
                   onClick={() => {
                     setSelectedSection(
-                      c.fieldInitialValues.sectionNumber ||
+                      c.fieldInitialValues?.sectionNumber ||
                         `${c.bookCode} ${c.cv[0]}`,
                     );
                     setAnchorEl(null);
@@ -114,7 +113,7 @@ function JumpButton({
                     );
                   }}
                   value={
-                    c.fieldInitialValues.sectionNumber ||
+                    c.fieldInitialValues?.sectionNumber ||
                     `${c.bookCode} ${c.cv[0]}` ||
                     null
                   }
