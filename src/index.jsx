@@ -6,7 +6,7 @@ import NewTranslationPlan from "./pages/New/NewTranslationPlanContent";
 import MuncherTest from "./pages/Test/MuncherTest";
 import { SnackbarProvider, MaterialDesignContent } from "notistack";
 import { styled } from "@mui/material";
-import Editor from "./pages/Editor";
+import Editor from "./components/translationPlanMuncher/muncher/Editor/TranslationPlanEditorMuncher";
 const router = createHashRouter([
   {
     path: "createDocument/translationPlan",
@@ -14,7 +14,7 @@ const router = createHashRouter([
   },
   {
     path: "/",
-    element: <Editor />,
+    element: <MuncherTest />,
   },
 ]);
 

@@ -1,5 +1,5 @@
 import TranslationPlanViewerMuncher from "../../components/translationPlanMuncher/muncher/Viewer/TranslationPlanViewerMuncher";
-import TranslationPlanEditorMuncher from "../Editor";
+import TranslationPlanEditorMuncher from "../../components/translationPlanMuncher/muncher/Editor/TranslationPlanEditorMuncher";
 import { WrapperNav } from "../../components/translationPlanMuncher/wrapperMuncher/WrapperNav";
 import { useEffect, useContext, useState } from "react";
 import { getJson } from "pankosmia-lib/http";
@@ -74,7 +74,15 @@ export default function MuncherTest() {
         <WrapperNav flavor={"x-translationplan"} />
       </Box>
 
-      <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: "auto",
+          flexDirection: "row",
+          display: "flex",
+        }}
+      >
         {metadata && (
           <Box sx={{ flex: 1, margin: 2 }}>
             <Button onClick={handleCreate}> Create Translation Plan </Button>
@@ -90,7 +98,6 @@ export default function MuncherTest() {
         )}
         {metadata && (
           <Box sx={{ flex: 1, margin: 2 }}>
-            <Button onClick={handleCreate}> Create Translation Plan </Button>
             <TranslationPlanEditorMuncher
               key={metadata.local_path}
               metadata={metadata}

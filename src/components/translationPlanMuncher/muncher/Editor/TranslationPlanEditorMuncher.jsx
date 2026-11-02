@@ -1,25 +1,17 @@
 import { JsonEditor } from "json-edit-react";
 import { useState, useEffect, useContext } from "react";
-import { Box } from "@mui/material";
+import { Box, Icon } from "@mui/material";
 import { getJson, postJson } from "pankosmia-lib/http";
-import GraphiteTest from "../components/GraphiteTest";
-import {
-  debugContext,
-  i18nContext,
-  typographyContext,
-  SpSpaPage,
-} from "pankosmia-rcl";
+import GraphiteTest from "../../../GraphiteTest";
 import { Button } from "@mui/material";
 import { doI18n } from "pankosmia-lib/i18n";
 import { enqueueSnackbar } from "notistack";
-
-export default function TranslationPlanEditorMuncher({}) {
+import { IconAdd, IconClose, IconDelete, IconDone, IconEdit } from "./icons";
+export default function TranslationPlanEditorMuncher({ debugRef, i18nRef, typographyRef }) {
+  console.log("🚀 ~ TranslationPlanEditorMuncher ~ typographyRef:", typographyRef)
   const [data, setData] = useState({});
-  const { debugRef } = useContext(debugContext);
-  const { i18nRef } = useContext(i18nContext);
-  const { typographyRef } = useContext(typographyContext);
   const [unsavedData, setUnsavedData] = useState(false);
-
+  console.log(IconAdd, IconEdit);
   let key = "git.door43.org/BurritoTruck/greek_sentence_plan";
   useEffect(() => {
     const doFetch = async () => {
@@ -75,9 +67,9 @@ export default function TranslationPlanEditorMuncher({}) {
   const adjSelectedFontClass = isGraphite
     ? typographyRef.current.font_set
     : typographyRef.current.font_set.replace(
-        /Pankosmia-AwamiNastaliq(.*)Pankosmia-NotoNastaliqUrdu/gi,
-        "Pankosmia-NotoNastaliqUrdu",
-      );
+      /Pankosmia-AwamiNastaliq(.*)Pankosmia-NotoNastaliqUrdu/gi,
+      "Pankosmia-NotoNastaliqUrdu",
+    );
   const panksomsiaTheme = {
     styles: {
       container: {
@@ -96,45 +88,74 @@ export default function TranslationPlanEditorMuncher({}) {
       iconDelete: "#AA0000",
       iconAdd: "#441650",
       iconCopy: "#441650",
-      iconOk: "#441650",
-      iconCancel: "#AA0000",
+      iconDone: "#441650",
+      iconClose: "#AA0000",
       input: ["#000", { fontSize: "100%" }],
       inputHighlight: "#EECCFF",
     },
   };
-
+  const icons = {
+    edit: { content : (IconEdit)},
+    add: { content: (IconAdd) },
+    delete: { content: (IconDelete) },
+    close: { content: (IconClose) },
+    done: { content: (IconDone) }
+  }
   return (
-    <SpSpaPage
-      requireNet={false}
-      titleKey="Translation plan editor"
-      currentId="i18n-editor"
-    >
-      <Box
-        sx={{
-          mb: 2,
-          position: "fixed",
-          top: "64px",
-          bottom: 0,
-          right: 0,
-          overflow: "auto",
-          width: "100%",
+    <Box sx={{ display: "flex", flexDirection: "column" }} className={adjSelectedFontClass}>
+
+      <JsonEditor
+        data={data}
+        rootName={data?.short_name}
+        setData={setData}
+        onUpdate={() => setUnsavedData(true)}
+        theme={{...panksomsiaTheme,icons}}
+        restrictEdit={restrictEditFilter}
+        restrictAdd={restrictAddFilter}
+        restrictDelete={restrictDeleteFilter}
+        showCollectionCount="when-closed"
+
+        translations={{
+          ITEM_SINGLE: doI18n(
+            "pages:i18n-editor:single_translation",
+            i18nRef.current,
+          ),
+          ITEMS_MULTIPLE: doI18n(
+            "pages:i18n-editor:multiple_translations",
+            i18nRef.current,
+          ),
+          KEY_NEW: doI18n(
+            "pages:i18n-editor:translation_new",
+            i18nRef.current,
+          ),
+          KEY_SELECT: doI18n(
+            "pages:i18n-editor:translation_select",
+            i18nRef.current,
+          ),
+          NO_KEY_OPTIONS: doI18n(
+            "pages:i18n-editor:no_translation_options",
+            i18nRef.current,
+          ),
+          ERROR_KEY_EXISTS: doI18n(
+            "pages:i18n-editor:error_translation_exists",
+            i18nRef.current,
+          ),
+          ERROR_INVALID_JSON: doI18n(
+            "pages:i18n-editor:invalid_json",
+            i18nRef.current,
+          ),
+          ERROR_UPDATE: doI18n(
+            "pages:i18n-editor:error_update",
+            i18nRef.current,
+          ),
+          ERROR_DELETE: doI18n(
+            "pages:i18n-editor:error_delete",
+            i18nRef.current,
+          ),
+          ERROR_ADD: doI18n("pages:i18n-editor:error_add", i18nRef.current),
+          SHOW_LESS: doI18n("pages:i18n-editor:show_less", i18nRef.current),
         }}
-        className={adjSelectedFontClass}
-      >
-        <JsonEditor
-          data={data}
-          rootName={data?.short_name}
-          setData={setData}
-          onUpdate={() => setUnsavedData(true)}
-          //theme={panksomsiaTheme}
-          restrictEdit={restrictEditFilter}
-          restrictAdd={restrictAddFilter}
-          restrictDelete={restrictDeleteFilter}
-          maxHeight="100%"
-          maxWidth="100%"
-          showCollectionCount="when-closed"
-        />
-      </Box>
+      />
       <Button
         sx={{
           color: unsavedData ? "#FFF" : "#AAA",
@@ -154,6 +175,6 @@ export default function TranslationPlanEditorMuncher({}) {
       >
         {doI18n("pages:i18n-editor:save_button", i18nRef.current)}
       </Button>
-    </SpSpaPage>
+    </Box>
   );
 }
