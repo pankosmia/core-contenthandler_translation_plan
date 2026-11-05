@@ -25,26 +25,26 @@ export default defineConfig(({ mode }) => {
           outDir: "src/components/translationPlanMuncher/munchersPackageExport",
           emptyOutDir: true,
           sourcemap: true,
+          rollupOptions: {
+            external: [
+              "react",
+              "react-dom",
+              "react-router-dom",
+              "notistack",
+              "pankosmia-rcl",
+              /^@mui\//,
+              /^@emotion\//,
+            ],
 
-          external: [
-            "react",
-            "react-dom",
-            "react-router-dom",
-            "notistack",
-            "pankosmia-rcl",
-
-            /^@mui\//,
-            /^@emotion\//,
-          ],
-
-          output: {
-            name: "translationPlanRcl",
-            globals: {
-              react: "React",
-              "react-dom": "ReactDOM",
-              "react-router-dom": "ReactRouterDOM",
-              notistack: "notistack",
-              "pankosmia-rcl": "pankosmiaRcl",
+            output: {
+              name: "translationPlanRcl",
+              globals: {
+                react: "React",
+                "react-dom": "ReactDOM",
+                "react-router-dom": "ReactRouterDOM",
+                notistack: "notistack",
+                "pankosmia-rcl": "pankosmiaRcl",
+              },
             },
           },
 
