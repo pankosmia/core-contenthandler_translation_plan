@@ -9,7 +9,7 @@ import {
 import { postEmpty } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import SearchIcon from "@mui/icons-material/Search";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 function JumpButton({
   planIngredient,
@@ -24,13 +24,18 @@ function JumpButton({
   const ITEM_HEIGHT = 48;
 
   const [search, setSearch] = useState("");
+  const [tooltipSection, setTooltipSection] = useState(null);
+
+  const closeMenu = () => {
+    setTooltipSection(null);
+    setAnchorEl(null);
+  };
 
   const filteredStories = planIngredient.sections?.filter((c) => {
-    const label = c.fieldInitialValues?.reference
+    const label = c.fieldInitialValues?.reference?.toLowerCase()
       ? `${c.fieldInitialValues.reference} ${c.fieldInitialValues.sectionTitle}`.toLowerCase()
       : `${c.bookCode} ${c.cv}`.toLowerCase();
-
-    return label.includes(search.toLowerCase());
+    return label.includes(search);
   });
   const updateBcv = (b, c, v) => {
     postEmpty(`/api/navigation/bcv/${b}/${c}/${v}`, debugRef.current);
@@ -51,9 +56,10 @@ function JumpButton({
         id="fade-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={() => setAnchorEl(null)}
+        onClose={closeMenu}
         slotProps={{
           paper: {
+            onScroll: () => setTooltipSection(null),
             style: {
               maxHeight: ITEM_HEIGHT * 4.5,
               width: "auto",
@@ -96,17 +102,24 @@ function JumpButton({
             return (
               <Tooltip
                 key={i}
+                open={open && tooltipSection === c}
+                onOpen={() => setTooltipSection(c)}
+                onClose={() =>
+                  setTooltipSection((current) =>
+                    current === c ? null : current,
+                  )
+                }
                 title={
-                  c.fieldInitialValues.reference || `${c.bookCode} ${c.cv}`
+                  c.fieldInitialValues?.reference || `${c.bookCode} ${c.cv}`
                 }
               >
                 <MenuItem
                   onClick={() => {
                     setSelectedSection(
-                      c.fieldInitialValues.sectionNumber ||
+                      c.fieldInitialValues?.sectionNumber ||
                         `${c.bookCode} ${c.cv[0]}`,
                     );
-                    setAnchorEl(null);
+                    closeMenu();
                     updateBcv(
                       c.bookCode,
                       c.cv[0].split(":")[0],
@@ -114,7 +127,7 @@ function JumpButton({
                     );
                   }}
                   value={
-                    c.fieldInitialValues.sectionNumber ||
+                    c.fieldInitialValues?.sectionNumber ||
                     `${c.bookCode} ${c.cv[0]}` ||
                     null
                   }
