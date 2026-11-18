@@ -344,15 +344,16 @@ function TranslationPlanViewerMuncher({
     >
       <Box
         sx={{
-          marginLeft: "auto",
-          marginRight: "40px",
-          marginBottom: "-40px",
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
           position: "sticky",
-          top: 4,
+          top: 0,
           zIndex: 2,
           backgroundColor: theme.palette.background.paper,
-          borderRadius: "16px",
-          boxShadow: `0 0 10px 6px ${theme.palette.background.paper}`,
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          marginBottom: "14px",
         }}
       >
         <JumpButton
@@ -365,8 +366,6 @@ function TranslationPlanViewerMuncher({
           i18nRef={i18nRef}
           debugRef={debugRef}
         />
-      </Box>
-      <Box sx={{ marginLeft: "auto" }}>
         <IconButton onClick={handleOpenDialogAbout}>
           <InfoIcon />
         </IconButton>
@@ -382,7 +381,10 @@ function TranslationPlanViewerMuncher({
         {selectedBurrito && (
           <>
             {section && (
-              <Box ref={sectionTopRef} sx={{ padding: 1 }}>
+              <Box
+                ref={sectionTopRef}
+                sx={{ padding: 1, scrollMarginTop: "56px" }}
+              >
                 <SectionReference section={section} />
                 {planIngredient.sectionStructure.map((field, i) => {
                   if (field.type === "scripture") {
