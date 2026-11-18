@@ -353,7 +353,6 @@ function TranslationPlanViewerMuncher({
           boxSizing: "border-box",
           position: "sticky",
           top: 0,
-          zIndex: 2,
           paddingTop: "10px",
           paddingBottom: "8px",
           backgroundColor: theme.palette.background.paper,
