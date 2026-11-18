@@ -39,6 +39,7 @@ function TranslationPlanViewerMuncher({
   const sectionTopRef = useRef(null);
   const graftRefs = useRef({});
   const pendingGraftIdxRef = useRef(null);
+  const suppressVerseScrollRef = useRef(false);
   const [verseScrollTrigger, setVerseScrollTrigger] = useState(0);
 
   const sbScriptDir = metadata?.script_direction
@@ -241,6 +242,7 @@ function TranslationPlanViewerMuncher({
       const verseSpan = target.closest(".span_edit_verses");
       const verseLabel = target.closest(".marks_verses_label");
       if (verseSpan || verseLabel) {
+        suppressVerseScrollRef.current = false;
         const labelEl = verseLabel || verseSpan?.previousElementSibling;
         const clickedVerse = Number(
           labelEl?.textContent?.trim()?.split("-")[0],
@@ -298,13 +300,22 @@ function TranslationPlanViewerMuncher({
           verseNum: Number(v),
           endVerseNum: Number(ev),
         };
-        if (section && !isInInterval(section, targetBcv)) {
+        const changingSection = section && !isInInterval(section, targetBcv);
+        if (changingSection) {
           pendingGraftIdxRef.current = graftIdx;
+        }
+        if (
+          changingSection ||
+          Number(systemBcv?.verseNum) !== targetBcv.verseNum
+        ) {
+          suppressVerseScrollRef.current = true;
           postEmpty(
             `/api/navigation/bcv/${targetBcv.bookCode}/${targetBcv.chapterNum}/${v}/${ev}`,
             debugRef?.current,
           );
-          return;
+          if (changingSection) {
+            return;
+          }
         }
       }
 
@@ -381,6 +392,7 @@ function TranslationPlanViewerMuncher({
                         systemBcv={systemBcv}
                         selectedBurritoTextDir={selectedBurritoTextDir}
                         verseScrollTrigger={verseScrollTrigger}
+                        suppressVerseScrollRef={suppressVerseScrollRef}
                       />
                     );
                   } else {

@@ -7,6 +7,7 @@ function ScriptureField({
   selectedBurritoTextDir,
   systemBcv,
   verseScrollTrigger = 0,
+  suppressVerseScrollRef,
 }) {
   const activeVerseRef = useRef(null);
   const sectionId = section ? `${section.bookCode}-${section.cv?.[0]}` : null;
@@ -18,6 +19,11 @@ function ScriptureField({
     const triggerChanged = prevTriggerRef.current !== verseScrollTrigger;
     prevSectionIdRef.current = sectionId;
     prevTriggerRef.current = verseScrollTrigger;
+
+    if (suppressVerseScrollRef?.current) {
+      suppressVerseScrollRef.current = false;
+      return;
+    }
 
     if (sectionChanged && !triggerChanged) {
       return;
@@ -34,6 +40,7 @@ function ScriptureField({
     systemBcv?.verseNum,
     sectionId,
     verseScrollTrigger,
+    suppressVerseScrollRef,
   ]);
 
   const getVerseData = (chapter, verse) => {
