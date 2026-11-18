@@ -366,7 +366,7 @@ function TranslationPlanViewerMuncher({
           <InfoIcon />
         </IconButton>
       </Box>
-      <Box>
+      <Box sx={{ paddingTop: "10px" }}>
         <ScripturePicker
           burritos={burritos}
           selectedBurrito={selectedBurrito}
@@ -379,7 +379,7 @@ function TranslationPlanViewerMuncher({
             {section && (
               <Box
                 ref={sectionTopRef}
-                sx={{ padding: 1, scrollMarginTop: "48px" }}
+                sx={{ padding: 1, scrollMarginTop: "56px" }}
               >
                 <SectionReference section={section} />
                 {planIngredient.sectionStructure.map((field, i) => {
