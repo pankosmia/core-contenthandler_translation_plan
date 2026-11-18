@@ -351,7 +351,8 @@ function TranslationPlanViewerMuncher({
           top: 4,
           zIndex: 2,
           backgroundColor: theme.palette.background.paper,
-          borderRadius: 1,
+          borderRadius: "16px",
+          boxShadow: `0 0 10px 6px ${theme.palette.background.paper}`,
         }}
       >
         <JumpButton
