@@ -339,6 +339,9 @@ function TranslationPlanViewerMuncher({
       sx={{
         display: "flex",
         flexDirection: "column",
+        width: "100%",
+        boxSizing: "border-box",
+        overflowX: "hidden",
       }}
       dir={!sbScriptDirSet ? textDir : undefined}
     >
@@ -347,6 +350,8 @@ function TranslationPlanViewerMuncher({
           display: "flex",
           alignItems: "center",
           gap: 1,
+          width: "100%",
+          boxSizing: "border-box",
           position: "sticky",
           top: 0,
           zIndex: 2,
