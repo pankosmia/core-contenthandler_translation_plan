@@ -14,9 +14,10 @@ function ScripturePicker({
     setSelectedBurrito(burrito);
   };
   return (
-    <FormControl fullWidth sx={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
+    <FormControl fullWidth sx={{ paddingLeft: "0.5rem", paddingRight: "0.5rem" }}>
       <TextField
         required
+        size="small"
         id="burrito-select-label"
         select
         value={selectedBurrito?.name || ""}

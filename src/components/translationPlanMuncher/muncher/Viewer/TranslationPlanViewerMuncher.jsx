@@ -345,45 +345,49 @@ function TranslationPlanViewerMuncher({
       <Box
         sx={{
           display: "flex",
-          justifyContent: "flex-end",
           alignItems: "center",
+          gap: 1,
           position: "sticky",
           top: 0,
           zIndex: 2,
+          paddingTop: "10px",
+          paddingBottom: "8px",
           backgroundColor: theme.palette.background.paper,
           borderBottom: "1px solid",
           borderColor: "divider",
-          marginBottom: "14px",
         }}
       >
-        <JumpButton
-          planIngredient={planIngredient}
-          selectedSection={selectedSection}
-          setSelectedSection={setSelectedSection}
-          anchorEl={anchorEl}
-          setAnchorEl={setAnchorEl}
-          open={open}
-          i18nRef={i18nRef}
-          debugRef={debugRef}
-        />
-        <IconButton onClick={handleOpenDialogAbout}>
-          <InfoIcon />
-        </IconButton>
+        <Box sx={{ flex: 1, minWidth: 0 }}>
+          <ScripturePicker
+            burritos={burritos}
+            selectedBurrito={selectedBurrito}
+            setSelectedBurrito={setSelectedBurrito}
+            i18nRef={i18nRef}
+          />
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+          <JumpButton
+            planIngredient={planIngredient}
+            selectedSection={selectedSection}
+            setSelectedSection={setSelectedSection}
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            open={open}
+            i18nRef={i18nRef}
+            debugRef={debugRef}
+          />
+          <IconButton onClick={handleOpenDialogAbout}>
+            <InfoIcon />
+          </IconButton>
+        </Box>
       </Box>
       <Box>
-        <ScripturePicker
-          burritos={burritos}
-          selectedBurrito={selectedBurrito}
-          setSelectedBurrito={setSelectedBurrito}
-          i18nRef={i18nRef}
-        />
-
         {selectedBurrito && (
           <>
             {section && (
               <Box
                 ref={sectionTopRef}
-                sx={{ padding: 1, scrollMarginTop: "56px" }}
+                sx={{ padding: 1, scrollMarginTop: "64px" }}
               >
                 <SectionReference section={section} />
                 {planIngredient.sectionStructure.map((field, i) => {
