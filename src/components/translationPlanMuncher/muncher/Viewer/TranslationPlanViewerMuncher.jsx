@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { getText } from "pankosmia-lib/http";
+import { getText, postEmpty } from "pankosmia-lib/http";
 
 import InfoIcon from "@mui/icons-material/Info";
 import TextDir from "../helpers/TextDir";
@@ -37,6 +37,9 @@ function TranslationPlanViewerMuncher({
     useState(undefined);
   const [openDialogAbout, setOpenDialogAbout] = useState(false);
   const sectionTopRef = useRef(null);
+  const graftRefs = useRef({});
+  const pendingGraftIdxRef = useRef(null);
+  const [verseScrollTrigger, setVerseScrollTrigger] = useState(0);
 
   const sbScriptDir = metadata?.script_direction
     ? metadata.script_direction.toLowerCase()
@@ -187,18 +190,137 @@ function TranslationPlanViewerMuncher({
 
   const sectionId = section ? `${section.bookCode}-${section.cv[0]}` : null;
 
-  useEffect(() => {
-    if (sectionTopRef.current) {
+  const scrollToGraft = (graftIdx) => {
+    if (graftIdx <= 0) {
+      if (sectionTopRef.current) {
+        sectionTopRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    } else if (graftRefs.current[graftIdx]) {
+      graftRefs.current[graftIdx].scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    } else if (sectionTopRef.current) {
       sectionTopRef.current.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
     }
-  }, [sectionId]);
+  };
+
+  useEffect(() => {
+    if (sectionTopRef.current) {
+      const pendingIdx = pendingGraftIdxRef.current;
+      pendingGraftIdxRef.current = null;
+      if (
+        pendingIdx != null &&
+        pendingIdx > 0 &&
+        graftRefs.current[pendingIdx]
+      ) {
+        graftRefs.current[pendingIdx].scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      } else {
+        sectionTopRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }
+  }, [sectionId, selectedBurrito]);
+
+  useEffect(() => {
+    const handleEditorInteraction = (e) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+
+      const verseSpan = target.closest(".span_edit_verses");
+      const verseLabel = target.closest(".marks_verses_label");
+      if (verseSpan || verseLabel) {
+        const labelEl = verseLabel || verseSpan?.previousElementSibling;
+        const clickedVerse = Number(
+          labelEl?.textContent?.trim()?.split("-")[0],
+        );
+        if (!clickedVerse || clickedVerse === Number(systemBcv?.verseNum)) {
+          setVerseScrollTrigger((c) => c + 1);
+        }
+        return;
+      }
+
+      const blockDiv = target.closest("div");
+      const graftSpan =
+        target.closest(".span_edit_graft") ||
+        blockDiv?.querySelector?.(":scope > .span_edit_graft");
+
+      const isRemarkBlock =
+        !graftSpan &&
+        blockDiv &&
+        blockDiv.firstElementChild?.tagName === "SPAN" &&
+        blockDiv.firstElementChild?.textContent?.trim() === "//";
+
+      if (!graftSpan && !isRemarkBlock) return;
+
+      const blockEl = graftSpan ? graftSpan.parentElement : blockDiv;
+      if (!blockEl) return;
+
+      let graftIdx = isRemarkBlock ? -1 : 0;
+      let prev = blockEl.previousElementSibling;
+      while (prev && prev.querySelector?.(".span_edit_graft")) {
+        if (!isRemarkBlock) graftIdx++;
+        prev = prev.previousElementSibling;
+      }
+
+      let nextEl = blockEl.nextElementSibling;
+      let nextVerseStr = null;
+      while (nextEl) {
+        const vLabel = nextEl.querySelector?.(".marks_verses_label");
+        if (vLabel?.textContent) {
+          nextVerseStr = vLabel.textContent.trim();
+          break;
+        }
+        nextEl = nextEl.nextElementSibling;
+      }
+
+      if (nextVerseStr && systemBcv?.bookCode && systemBcv?.chapterNum) {
+        const v = nextVerseStr.includes("-")
+          ? nextVerseStr.split("-")[0]
+          : nextVerseStr;
+        const ev = nextVerseStr.includes("-")
+          ? nextVerseStr.split("-")[1]
+          : nextVerseStr;
+        const targetBcv = {
+          bookCode: systemBcv.bookCode,
+          chapterNum: Number(systemBcv.chapterNum),
+          verseNum: Number(v),
+          endVerseNum: Number(ev),
+        };
+        if (section && !isInInterval(section, targetBcv)) {
+          pendingGraftIdxRef.current = graftIdx;
+          postEmpty(
+            `/api/navigation/bcv/${targetBcv.bookCode}/${targetBcv.chapterNum}/${v}/${ev}`,
+            debugRef?.current,
+          );
+          return;
+        }
+      }
+
+      scrollToGraft(graftIdx);
+    };
+
+    document.addEventListener("click", handleEditorInteraction);
+    return () => document.removeEventListener("click", handleEditorInteraction);
+  });
 
   if (!planIngredient) {
     return <Typography> loading...</Typography>;
   }
+
+  let graftCounter = 0;
+  graftRefs.current = {};
 
   // If SB does not specify direction then it is set here, otherwise it has already been set per SB in WorkspaceCard
   return (
@@ -209,7 +331,16 @@ function TranslationPlanViewerMuncher({
       }}
       dir={!sbScriptDirSet ? textDir : undefined}
     >
-      <Box sx={{ marginLeft: "auto" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          position: "sticky",
+          top: 0,
+          zIndex: 2,
+          backgroundColor: theme.palette.background.paper,
+        }}
+      >
         <JumpButton
           planIngredient={planIngredient}
           selectedSection={selectedSection}
@@ -235,7 +366,10 @@ function TranslationPlanViewerMuncher({
         {selectedBurrito && (
           <>
             {section && (
-              <Box ref={sectionTopRef} sx={{ padding: 1 }}>
+              <Box
+                ref={sectionTopRef}
+                sx={{ padding: 1, scrollMarginTop: "48px" }}
+              >
                 <SectionReference section={section} />
                 {planIngredient.sectionStructure.map((field, i) => {
                   if (field.type === "scripture") {
@@ -246,17 +380,31 @@ function TranslationPlanViewerMuncher({
                         verseText={verseText}
                         systemBcv={systemBcv}
                         selectedBurritoTextDir={selectedBurritoTextDir}
+                        verseScrollTrigger={verseScrollTrigger}
                       />
                     );
                   } else {
+                    const hasValue = Boolean(
+                      section.fieldInitialValues?.[field.name] ||
+                      planIngredient.fieldInitialValues?.[field.name],
+                    );
+                    if (!hasValue) return null;
+                    const currentGraftIdx = graftCounter++;
                     return (
-                      <NonScriptureField
+                      <div
                         key={i}
-                        planIngredient={planIngredient}
-                        section={section}
-                        field={field}
-                        typographyRef={typographyRef}
-                      />
+                        ref={(el) => {
+                          graftRefs.current[currentGraftIdx] = el;
+                        }}
+                        style={{ scrollMarginTop: "48px" }}
+                      >
+                        <NonScriptureField
+                          planIngredient={planIngredient}
+                          section={section}
+                          field={field}
+                          typographyRef={typographyRef}
+                        />
+                      </div>
                     );
                   }
                 })}
