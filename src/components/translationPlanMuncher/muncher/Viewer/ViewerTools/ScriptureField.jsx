@@ -1,23 +1,47 @@
 import React, { useEffect, useRef } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 function ScriptureField({
   section,
   verseText,
   selectedBurritoTextDir,
   systemBcv,
+  verseScrollTrigger = 0,
+  suppressVerseScrollRef,
 }) {
   const activeVerseRef = useRef(null);
+  const sectionId = section ? `${section.bookCode}-${section.cv?.[0]}` : null;
+  const prevSectionIdRef = useRef(null);
+  const prevTriggerRef = useRef(verseScrollTrigger);
 
-  // Automatic scroll that was causing the translation plan to jump to verse 1, missing a lot of content. (This works fine for other resources)
-  /*   useEffect(() => {
+  useEffect(() => {
+    const sectionChanged = prevSectionIdRef.current !== sectionId;
+    const triggerChanged = prevTriggerRef.current !== verseScrollTrigger;
+    prevSectionIdRef.current = sectionId;
+    prevTriggerRef.current = verseScrollTrigger;
+
+    if (suppressVerseScrollRef?.current) {
+      suppressVerseScrollRef.current = false;
+      return;
+    }
+
+    if (sectionChanged && !triggerChanged) {
+      return;
+    }
+
     if (activeVerseRef?.current) {
       activeVerseRef.current.scrollIntoView({
         behavior: "smooth",
         block: "center",
       });
     }
-  }, [systemBcv?.chapterNum, systemBcv?.verseNum]); */
+  }, [
+    systemBcv?.chapterNum,
+    systemBcv?.verseNum,
+    sectionId,
+    verseScrollTrigger,
+    suppressVerseScrollRef,
+  ]);
 
   const getVerseData = (chapter, verse) => {
     const chapterData = verseText?.[chapter.toString()] || {};
